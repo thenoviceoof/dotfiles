@@ -24,6 +24,8 @@ alias gip="git push"
 alias gil="git log --graph --abbrev-commit --pretty=format:\"%Cred%h%Creset - %C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset\""
 
 alias e="emacs -nw"
+alias p="python"
+alias bp="bpython"
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
