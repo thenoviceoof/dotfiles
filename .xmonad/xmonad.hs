@@ -8,25 +8,28 @@ import XMonad.Actions.DynamicWorkspaces
 
 import qualified XMonad.StackSet as W
 
+
+modkey = mod4Mask
 myManageHook = composeAll
                [ className =? "Do" --> doFloat
                , manageDocks
                ]
 
-myWorkspaces = map show [1 .. 12]
+moreWorkspaces = map show [10 .. 12]
+moreKeys = [xK_0, xK_bracketleft, xK_bracketright]
+myWorkspaces = map show [1 .. 9] ++ moreWorkspaces
 
-moreKeys = [ ("M-m", viewEmptyWorkspace)
-           , ("M-0", windows $ W.greedyView "10")
-           , ("M-[", windows $ W.greedyView "11")
-           , ("M-]", windows $ W.greedyView "12")
-           , ("S-M-0", windows $ W.shift "10")
-           , ("S-M-[", windows $ W.shift "11")
-           , ("S-M-]", windows $ W.shift "12")
-           ]
+myKeys = [ ((modkey, xK_m), viewEmptyWorkspace)
+         ]
+         ++
+         [((m .|. modkey, k), windows $ f i)
+         | (k, i) <- zip moreKeys moreWorkspaces
+         , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]
+         ]
 
 main = xmonad $ gnomeConfig
         { terminal = "gnome-terminal"
-        , modMask = mod4Mask
+        , modMask = modkey
         , manageHook = myManageHook <+> manageHook gnomeConfig
         , workspaces = myWorkspaces
-        } `additionalKeysP` moreKeys
+        } `additionalKeys` myKeys
