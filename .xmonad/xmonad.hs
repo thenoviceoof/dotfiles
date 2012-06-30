@@ -19,6 +19,9 @@ moreKeys = [ ("M-m", viewEmptyWorkspace)
            , ("M-0", windows $ W.greedyView "10")
            , ("M-[", windows $ W.greedyView "11")
            , ("M-]", windows $ W.greedyView "12")
+           , ("S-M-0", windows $ W.shift "10")
+           , ("S-M-[", windows $ W.shift "11")
+           , ("S-M-]", windows $ W.shift "12")
            ]
 
 main = xmonad $ gnomeConfig
