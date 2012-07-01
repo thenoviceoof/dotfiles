@@ -7,7 +7,7 @@ import XMonad.Actions.FindEmptyWorkspace
 
 import XMonad.Layout.PerWorkspace
 import XMonad.Layout.IM
-import XMonad.Layout.Grid
+-- import XMonad.Layout.FixedColumn
 
 import qualified XMonad.StackSet as W
 
@@ -34,6 +34,7 @@ myKeys = [ ((modkey, xK_m), viewEmptyWorkspace)
 myLayouts = onWorkspace "12" imLayout $ layoutHook gnomeConfig
   where
     imLayout = Tall 1 (3/100) (3/4)
+    -- imLayout = FixedColumn 1 20 120 10
 
 main = xmonad $ gnomeConfig
         { terminal = "gnome-terminal"
