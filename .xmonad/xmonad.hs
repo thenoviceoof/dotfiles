@@ -4,7 +4,10 @@ import XMonad.Util.EZConfig
 import XMonad.Config.Gnome
 
 import XMonad.Actions.FindEmptyWorkspace
-import XMonad.Actions.DynamicWorkspaces
+
+import XMonad.Layout.PerWorkspace
+import XMonad.Layout.IM
+import XMonad.Layout.Grid
 
 import qualified XMonad.StackSet as W
 
@@ -12,6 +15,7 @@ import qualified XMonad.StackSet as W
 modkey = mod4Mask
 myManageHook = composeAll
                [ className =? "Do" --> doFloat
+               , className =? "Pidgin" --> doShift "12"
                , manageDocks
                ]
 
@@ -26,10 +30,15 @@ myKeys = [ ((modkey, xK_m), viewEmptyWorkspace)
          | (k, i) <- zip moreKeys moreWorkspaces
          , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]
          ]
+         
+myLayouts = onWorkspace "12" imLayout $ layoutHook gnomeConfig
+  where
+    imLayout = Tall 1 (3/100) (3/4)
 
 main = xmonad $ gnomeConfig
         { terminal = "gnome-terminal"
         , modMask = modkey
         , manageHook = myManageHook <+> manageHook gnomeConfig
         , workspaces = myWorkspaces
+        , layoutHook = myLayouts
         } `additionalKeys` myKeys
