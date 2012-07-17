@@ -27,6 +27,7 @@ alias gid="git diff --minimal --color"
 alias sudo="sudo "
 
 alias e="emacsclient -nw"
+alias restartemacs="pkill -f emacs"
 alias p="python"
 alias bp="bpython"
 
