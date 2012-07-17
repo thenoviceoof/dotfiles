@@ -23,6 +23,8 @@ alias gic="git commit"
 alias gip="git push"
 alias gil="git log --graph --abbrev-commit --pretty=format:\"%Cred%h%Creset - %C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset\""
 alias gid="git diff --minimal --color"
+# http://serverfault.com/questions/61321/how-to-pass-alias-through-sudo
+alias sudo="sudo "
 
 alias e="emacsclient -nw"
 alias p="python"
