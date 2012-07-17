@@ -9,6 +9,10 @@ import XMonad.Layout.PerWorkspace
 import XMonad.Layout.IM
 -- import XMonad.Layout.FixedColumn
 
+-- full-screen flash
+import XMonad.Layout.NoBorders
+import XMonad.Hooks.ManageHelpers
+
 import qualified XMonad.StackSet as W
 
 
@@ -16,6 +20,8 @@ modkey = mod4Mask
 myManageHook = composeAll
                [ className =? "Do" --> doFloat
                , className =? "Pidgin" --> doShift "12"
+                 -- full-screen flash??
+                 --isFullscreen --> (doF W.focusDown <+> doFullFloat)
                , manageDocks
                ]
 
@@ -41,5 +47,5 @@ main = xmonad $ gnomeConfig
         , modMask = modkey
         , manageHook = myManageHook <+> manageHook gnomeConfig
         , workspaces = myWorkspaces
-        , layoutHook = myLayouts
+        , layoutHook = smartBorders $ myLayouts
         } `additionalKeys` myKeys
