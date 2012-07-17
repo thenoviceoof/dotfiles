@@ -26,7 +26,7 @@ alias gid="git diff --minimal --color"
 # http://serverfault.com/questions/61321/how-to-pass-alias-through-sudo
 alias sudo="sudo "
 
-alias e="emacsclient -nw"
+alias e="emacsclient -nw --alternate-editor=''"
 alias restartemacs="pkill -f emacs"
 alias p="python"
 alias bp="bpython"
@@ -66,5 +66,4 @@ PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 #    emacs --daemon
 #    clear
 #fi
-export EDITOR="emacsclient -nw"
-export ALTERNATE_EDITOR=""
+export EDITOR="emacsclient -nw --alternate-editor=''"
