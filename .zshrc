@@ -60,9 +60,10 @@ export PATH=/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/u
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 
-if [ ! "$(ps -ef | grep -v grep | grep "emacs --daemon")" ]
-then
-    emacs --daemon
-    clear
-fi
+#if [ ! "$(ps -ef | grep -v grep | grep "emacs --daemon")" ]
+#then
+#    emacs --daemon
+#    clear
+#fi
 export EDITOR="emacsclient -nw"
+export ALTERNATE_EDITOR=""
