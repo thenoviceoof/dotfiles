@@ -24,7 +24,7 @@ alias gip="git push"
 alias gil="git log --graph --abbrev-commit --pretty=format:\"%Cred%h%Creset - %C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset\""
 alias gid="git diff --minimal --color"
 
-alias e="emacs -nw"
+alias e="emacsclient -nw"
 alias p="python"
 alias bp="bpython"
 
@@ -40,10 +40,12 @@ alias bp="bpython"
 # Uncomment following line if you want to disable autosetting terminal title.
 # DISABLE_AUTO_TITLE="true"
 
-# Uncomment following line if you want red dots to be displayed while waiting for completion
+# Uncomment following line if you want red dots to be displayed while
+# waiting for completion
 # COMPLETION_WAITING_DOTS="true"
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Which plugins would you like to load? (plugins can be found in
+# ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(git)
@@ -55,3 +57,10 @@ export PATH=/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/u
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+
+if [ ! "$(ps -ef | grep -v grep | grep "emacs --daemon")" ]
+then
+    emacs --daemon
+    clear
+fi
+export EDITOR="emacsclient -nw"
