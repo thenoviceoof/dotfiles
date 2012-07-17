@@ -11,6 +11,7 @@
  c-default-style "linux"
  c-basic-offset 8)
 
+; caml-font
 (require 'caml-font)
 (setq save-abbrevs nil)
 
@@ -32,9 +33,13 @@
       predictive-which-dict t)
 
 ; scala mode
-(add-to-list 'load-path "/home/thenoviceoof/.emacs.d/scala-mode/")
+(add-to-list 'load-path "~/.emacs.d/scala-mode/")
 (require 'scala-mode)
 (require 'scala-mode-auto)
 
 ; open .json with javascript mode
 (setq auto-mode-alist (cons '("\\.json$" . javascript-mode) auto-mode-alist))
+
+; unique buffer names
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'reverse)
