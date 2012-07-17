@@ -7,9 +7,7 @@ import XMonad.Actions.FindEmptyWorkspace
 
 import XMonad.Layout.PerWorkspace
 import XMonad.Layout.IM
--- import XMonad.Layout.FixedColumn
 
--- full-screen flash
 import XMonad.Layout.NoBorders
 import XMonad.Hooks.ManageHelpers
 
@@ -20,8 +18,8 @@ modkey = mod4Mask
 myManageHook = composeAll
                [ className =? "Do" --> doFloat
                , className =? "Pidgin" --> doShift "12"
-                 -- full-screen flash??
-                 --isFullscreen --> (doF W.focusDown <+> doFullFloat)
+                 -- trying out fullscreen flash
+               , isFullscreen --> doFullFloat
                , manageDocks
                ]
 
