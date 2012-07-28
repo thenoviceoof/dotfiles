@@ -1,3 +1,15 @@
+;; WHAT CL COMPAT???
+(require 'cl)
+
+; don't care about the result
+(defmacro toss (&rest body)
+  `(condition-case ex
+       (progn ,@body)
+     ('error)))
+
+;;######################################################################
+;; defaults
+
 ; try to set the default fonts
 (set-face-attribute 'default nil :height 110)
 
@@ -11,35 +23,55 @@
  c-default-style "linux"
  c-basic-offset 8)
 
-; caml-font
-(require 'caml-font)
-(setq save-abbrevs nil)
-
-; try a better expansion lib
-(global-set-key "\M- " 'hippie-expand)
-
 ; don't indent tabs
 (setq-default indent-tabs-mode nil)
 
-; trying out predictive mode
-(add-to-list 'load-path "~/.emacs.d/predictive")
-(require 'predictive)
-(autoload 'predictive-mode "predictive" "predictive" t)
-(set-default 'predictive-auto-add-to-dict t)
-(setq ;predictive-main-dict 'rpg-dictionary ; don't have a dict
-      predictive-auto-learn t
-      predictive-add-to-dict-ask nil
-      predictive-use-auto-learn-cache nil
-      predictive-which-dict t)
 
-; scala mode
-(add-to-list 'load-path "~/.emacs.d/scala-mode/")
-(require 'scala-mode)
-(require 'scala-mode-auto)
-
-; open .json with javascript mode
-(setq auto-mode-alist (cons '("\\.json$" . javascript-mode) auto-mode-alist))
+;;######################################################################
+;; more fancy language-agnostic things
 
 ; unique buffer names
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'reverse)
+
+; try a better expansion lib
+(toss
+ (global-set-key "\M- " 'hippie-expand))
+
+; trying out predictive mode
+(toss
+ (add-to-list 'load-path "~/.emacs.d/predictive")
+ (require 'predictive)
+ (autoload 'predictive-mode "predictive" "predictive" t)
+ (set-default 'predictive-auto-add-to-dict t)
+ (setq ;predictive-main-dict 'rpg-dictionary ; don't have a dict
+  predictive-auto-learn t
+  predictive-add-to-dict-ask nil
+  predictive-use-auto-learn-cache nil
+  predictive-which-dict t))
+
+; get rid of the annoying revert on git branch switches
+(global-auto-revert-mode t)
+
+
+;;######################################################################
+;; language specific extensions
+
+; open .json with javascript mode
+(setq auto-mode-alist (cons '("\\.json$" . javascript-mode) auto-mode-alist))
+
+; scala mode
+(toss
+ (add-to-list 'load-path "~/.emacs.d/scala-mode/")
+ (require 'scala-mode)
+ (require 'scala-mode-auto))
+
+; coffee mode
+(toss
+ (add-to-list 'load-path "~/.emacs.d/coffee-mode")
+ (require 'coffee-mode))
+
+; caml-font
+(toss
+ (require 'caml-font)
+ (setq save-abbrevs nil))
