@@ -53,6 +53,9 @@
 ; get rid of the annoying revert on git branch switches
 (global-auto-revert-mode t)
 
+; trying out IDO, per Moses's suggestion
+(require 'ido)
+
 
 ;;######################################################################
 ;; language specific extensions
@@ -69,7 +72,9 @@
 ; coffee mode
 (toss
  (add-to-list 'load-path "~/.emacs.d/coffee-mode")
- (require 'coffee-mode))
+ (require 'coffee-mode)
+ (add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
+ (add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode)))
 
 ; caml-font
 (toss
