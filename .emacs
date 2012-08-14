@@ -99,3 +99,7 @@
  (require 'pymacs)
  (pymacs-load "ropemacs" "rope-")
  (setq ropemacs-enable-autoimport t))
+
+(toss
+ (add-to-list 'load-path "~/.emacs.d/")
+ (require 'clojure-mode))
