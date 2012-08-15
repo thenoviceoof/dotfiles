@@ -68,9 +68,4 @@ PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 PATH=$PATH:$HOME/.local/bin
 PATH=$PATH:$HOME/.cljr/bin
 
-#if [ ! "$(ps -ef | grep -v grep | grep "emacs --daemon")" ]
-#then
-#    emacs --daemon
-#    clear
-#fi
 export EDITOR="emacsclient -nw --alternate-editor=''"
