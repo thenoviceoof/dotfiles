@@ -31,6 +31,10 @@ alias restartemacs="pkill -f emacs"
 alias p="python"
 alias bp="bpython"
 
+# http://daniel.haxx.se/blog/2010/12/14/add-latency-to-localhost/
+alias throttlelocal="tc qdisc add dev lo root handle 1:0 netem delay 10msec"
+alias throttlestop="tc qdisc del dev lo root"
+
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
 
@@ -64,9 +68,4 @@ PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 PATH=$PATH:$HOME/.local/bin
 PATH=$PATH:$HOME/.cljr/bin
 
-#if [ ! "$(ps -ef | grep -v grep | grep "emacs --daemon")" ]
-#then
-#    emacs --daemon
-#    clear
-#fi
 export EDITOR="emacsclient -nw --alternate-editor=''"
