@@ -26,7 +26,7 @@ alias gid="git diff --minimal --color"
 # http://serverfault.com/questions/61321/how-to-pass-alias-through-sudo
 alias sudo="sudo "
 
-alias e="emacsclient -nw --alternate-editor=''"
+alias e="pwd | xargs -I {} emacsclient -nw --alternate-editor='' -e '(select-frame (make-frame))' '(cd \"{}\")'"
 alias restartemacs="pkill -f emacs"
 alias p="python"
 alias bp="bpython"
