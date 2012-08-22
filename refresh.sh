@@ -5,3 +5,4 @@
 cp ~/.emacs .
 cp ~/.zshrc .
 cp ~/.xmonad/xmonad.hs .xmonad/
+cp ~/.local/bin/e.sh .

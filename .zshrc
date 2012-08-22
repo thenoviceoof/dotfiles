@@ -26,7 +26,8 @@ alias gid="git diff --minimal --color"
 # http://serverfault.com/questions/61321/how-to-pass-alias-through-sudo
 alias sudo="sudo "
 
-alias e="pwd | xargs -I {} emacsclient -nw --alternate-editor='' -e '(select-frame (make-frame))' '(cd \"{}\")'"
+# using a shell script to handle more epic behavior
+#alias e="pwd | xargs -I {} emacsclient -nw --alternate-editor=''
 alias restartemacs="pkill -f emacs"
 alias p="python"
 alias bp="bpython"
@@ -68,4 +69,5 @@ PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 PATH=$PATH:$HOME/.local/bin
 PATH=$PATH:$HOME/.cljr/bin
 
-export EDITOR="emacsclient -nw --alternate-editor=''"
+# assumes .local/bin/e.sh -> e is there
+export EDITOR="e"
