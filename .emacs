@@ -81,20 +81,8 @@
  (require 'caml-font)
  (setq save-abbrevs nil))
 
+; NOTE: do not install python-mode through apt, do install pymacs
 (toss
- ; installing python-mode on ubuntu gets both python-mode and pymacs
- (autoload 'python-mode "python-mode" "Python Mode." t)
- (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
- (add-to-list 'interpreter-mode-alist '("python'" . python-mode))
- (require 'python-mode)
-
- ; pymacs
- ;; (add-to-list 'load-path "~/.emacs.d/pymacs")
- ;; (autoload 'pymacs-apply "pymacs")
- ;; (autoload 'pymacs-call "pymacs")
- ;; (autoload 'pymacs-eval "pymacs" nil t)
- ;; (autoload 'pymacs-exec "pymacs" nil t)
- ;; (autoload 'pymacs-load "pymacs" nil t)
  ; ropemacs
  (require 'pymacs)
  (pymacs-load "ropemacs" "rope-")
