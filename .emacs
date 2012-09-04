@@ -91,3 +91,9 @@
 (toss
  (add-to-list 'load-path "~/.emacs.d/")
  (require 'clojure-mode))
+
+;; go mode
+(toss
+ ; usual ubuntu golang install path
+ (setq load-path (cons "/usr/lib/go/misc/emacs" load-path))
+ (require 'go-mode-load))
