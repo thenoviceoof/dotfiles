@@ -15,8 +15,11 @@
 
 ; fancy whitespace highlighting
 (require 'whitespace)
-(setq whitespace-style '(face empty tabs lines-tail))
+(setq whitespace-style '(face empty tabs tab-mark lines-tail))
 (global-whitespace-mode t)
+(custom-set-faces
+ '(whitespace-tab (( ((class color))
+                     (:foreground "#505050")))))
 
 ; for c mode, tab in 8 spaces
 (setq-default 
