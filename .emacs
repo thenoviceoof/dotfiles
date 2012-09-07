@@ -19,7 +19,9 @@
 (global-whitespace-mode t)
 (custom-set-faces
  '(whitespace-tab (( ((class color))
-                     (:foreground "#505050")))))
+                     (:foreground "#505050"))))
+ '(whitespace-line (( ((class color))
+                      (:background "black")))) )
 
 ; for c mode, tab in 8 spaces
 (setq-default 
