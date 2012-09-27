@@ -65,6 +65,9 @@
 ;;######################################################################
 ;; language specific extensions
 
+; open .zsh with shell-script mode
+(setq auto-mode-alist (cons '("\\.zsh$" . shell-script-mode) auto-mode-alist))
+
 ; open .json with javascript mode
 (setq auto-mode-alist (cons '("\\.json$" . javascript-mode) auto-mode-alist))
 
