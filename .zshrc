@@ -11,31 +11,6 @@ ZSH_THEME="frisk"
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# personal aliases
-alias ls="ls --color"
-alias ll="ls -lh"
-alias l="ls"
-alias c="cd"
-
-alias gis="git status"
-alias gia="git add"
-alias gic="git commit"
-alias gip="git push"
-alias gil="git log --graph --abbrev-commit --pretty=format:\"%Cred%h%Creset - %C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset\""
-alias gid="git diff --minimal --color"
-# http://serverfault.com/questions/61321/how-to-pass-alias-through-sudo
-alias sudo="sudo "
-
-# using a shell script to handle more epic behavior
-#alias e="pwd | xargs -I {} emacsclient -nw --alternate-editor=''
-alias restartemacs="pkill -f emacs"
-alias p="python"
-alias bp="bpython"
-
-# http://daniel.haxx.se/blog/2010/12/14/add-latency-to-localhost/
-alias throttlelocal="tc qdisc add dev lo root handle 1:0 netem delay 10msec"
-alias throttlestop="tc qdisc del dev lo root"
-
 # Comment this out to disable weekly auto-update checks
 # DISABLE_AUTO_UPDATE="true"
 
