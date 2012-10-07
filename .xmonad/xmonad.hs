@@ -41,7 +41,7 @@ myLayouts = onWorkspace "12" imLayout $ layoutHook gnomeConfig
     -- imLayout = FixedColumn 1 20 120 10
 
 main = xmonad $ gnomeConfig
-        { terminal = "gnome-terminal"
+        { terminal = "gnome-terminal --hide-menubar"
         , modMask = modkey
         , manageHook = myManageHook <+> manageHook gnomeConfig
         , workspaces = myWorkspaces
