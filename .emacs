@@ -58,7 +58,8 @@
 ; get rid of the annoying revert on git branch switches
 (global-auto-revert-mode t)
 
-; trying out IDO, per Moses's suggestion
+;; trying out IDO, per Moses's suggestion
+; http://emacswiki.org/emacs/InteractivelyDoThings
 (require 'ido)
 
 ; prevent mumamo from annoying me too much
@@ -69,7 +70,8 @@
 ;;######################################################################
 ;; language specific extensions
 
-; mumamo, for html+js
+;; mumamo, for html+js
+; http://ourcomments.org/Emacs/nXhtml/doc/nxhtml.html+js
 (toss
   (load "~/.emacs.d/nxhtml/autostart.el")
   (setq mumamo-background-colors nil))
@@ -98,7 +100,7 @@
  (require 'caml-font)
  (setq save-abbrevs nil))
 
-; NOTE: do not install python-mode through apt, do install pymacs
+; NOTE: do not install python-mode through apt, do apt install pymacs
 (toss
  ; ropemacs
  (require 'pymacs)
@@ -110,13 +112,15 @@
  (require 'clojure-mode))
 
 ;; go mode
+; installed with golang (ubuntu packages)
 (toss
  ; usual ubuntu golang install path
  (setq load-path (cons "/usr/lib/go/misc/emacs" load-path))
  (require 'go-mode-load))
 
 ;; jade mode
-;(toss
+; https://github.com/brianc/jade-mode
+(toss
  (add-to-list 'load-path "~/.emacs.d/jade-mode")
  (require 'jade-mode)
- (add-to-list 'auto-mode-alist '("\\.jade$" . jade-mode));)
+ (add-to-list 'auto-mode-alist '("\\.jade$" . jade-mode))
