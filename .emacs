@@ -88,7 +88,8 @@
  (require 'scala-mode)
  (require 'scala-mode-auto))
 
-; coffee mode
+;; coffee mode
+; https://github.com/defunkt/coffee-mode
 (toss
  (add-to-list 'load-path "~/.emacs.d/coffee-mode")
  (require 'coffee-mode)
