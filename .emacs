@@ -61,9 +61,18 @@
 ; trying out IDO, per Moses's suggestion
 (require 'ido)
 
+; prevent mumamo from annoying me too much
+(custom-set-variables
+ '(warning-minimum-level :error))
+
 
 ;;######################################################################
 ;; language specific extensions
+
+; mumamo, for html+js
+(toss
+  (load "~/.emacs.d/nxhtml/autostart.el")
+  (setq mumamo-background-colors nil))
 
 ; open .zsh with shell-script mode
 (setq auto-mode-alist (cons '("\\.zsh$" . shell-script-mode) auto-mode-alist))
@@ -105,3 +114,9 @@
  ; usual ubuntu golang install path
  (setq load-path (cons "/usr/lib/go/misc/emacs" load-path))
  (require 'go-mode-load))
+
+;; jade mode
+;(toss
+ (add-to-list 'load-path "~/.emacs.d/jade-mode")
+ (require 'jade-mode)
+ (add-to-list 'auto-mode-alist '("\\.jade$" . jade-mode));)
