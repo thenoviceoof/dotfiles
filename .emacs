@@ -124,4 +124,10 @@
 (toss
  (add-to-list 'load-path "~/.emacs.d/jade-mode")
  (require 'jade-mode)
- (add-to-list 'auto-mode-alist '("\\.jade$" . jade-mode))
+ (add-to-list 'auto-mode-alist '("\\.jade$" . jade-mode)))
+
+;; less mode
+; https://github.com/purcell/less-css-mode/
+(toss
+  (require 'less-css-mode)
+  (add-to-list 'auto-mode-alist '("\\.less$" . less-css-mode)))
