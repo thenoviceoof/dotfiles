@@ -154,3 +154,6 @@
 (toss
   (require 'less-css-mode)
   (add-to-list 'auto-mode-alist '("\\.less$" . less-css-mode)))
+
+(put 'downcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
