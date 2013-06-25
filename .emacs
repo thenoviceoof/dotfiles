@@ -159,3 +159,7 @@
   (require 'less-css-mode)
   (add-to-list 'auto-mode-alist '("\\.less$" . less-css-mode)))
 
+;; lilypond mode
+; part of ubuntu's lilypond package
+(toss
+ (require 'lilypond-mode))
