@@ -144,7 +144,8 @@
 (toss
  ; usual ubuntu golang install path
  (setq load-path (cons "/usr/lib/go/misc/emacs" load-path))
- (require 'go-mode-load))
+ (require 'go-mode-load)
+ (add-hook 'before-save-hook #'gofmt-before-save))
 
 ;; jade mode
 ; https://github.com/brianc/jade-mode
