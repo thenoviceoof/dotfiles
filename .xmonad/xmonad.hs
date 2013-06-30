@@ -13,6 +13,8 @@ import XMonad.Hooks.ManageHelpers
 
 import qualified XMonad.StackSet as W
 
+import XMonad.Hooks.ICCCMFocus
+
 
 modkey = mod4Mask
 myManageHook = composeAll
@@ -46,4 +48,5 @@ main = xmonad $ gnomeConfig
         , manageHook = myManageHook <+> manageHook gnomeConfig
         , workspaces = myWorkspaces
         , layoutHook = smartBorders $ myLayouts
+        , logHook = takeTopFocus
         } `additionalKeys` myKeys
