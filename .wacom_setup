@@ -1,0 +1,11 @@
+#!//bin/bash
+
+# get the pad device
+wacom_device=`xsetwacom list dev | grep "PAD" | cut -f 2 | cut -f 2 -d " "`
+
+# Zoom (using FN1 / FN2)
+xsetwacom set $wacom_device Button 1 "key ,"
+xsetwacom set $wacom_device Button 3 "key ."
+# Layers (using < / >)
+xsetwacom set $wacom_device Button 8 "key Ctrl PgUp"
+xsetwacom set $wacom_device Button 9 "key Ctrl PgDn"
