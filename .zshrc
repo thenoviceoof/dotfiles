@@ -76,7 +76,9 @@ zsh_theme_git_prompt_stash () {
 }
 
 git_prompt_info () {
+    # stolen from oh-my-zsh
     ref=$(command git symbolic-ref HEAD 2> /dev/null) || \
     ref=$(command git rev-parse --short HEAD 2> /dev/null) || return 0
+
     echo "%{$fg[green]%}[${ref#refs/heads/}$(zsh_theme_git_prompt_diff)$(zsh_theme_git_prompt_stash)] "
 }
