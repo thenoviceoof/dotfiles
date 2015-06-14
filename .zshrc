@@ -40,3 +40,37 @@ PATH=$PATH:$HOME/.cljr/bin
 
 # assumes .local/bin/e.sh -> e is there
 export EDITOR="e"
+
+# customize git prompt
+
+zsh_theme_git_prompt_diff () {
+    DIFFSTAT=`git diff --shortstat`
+    PLUSSTAT=`echo "$DIFFSTAT" | grep -oE "[0-9]+ insert" |  grep -oE "[0-9]+"`
+    MINUSTAT=`echo "$DIFFSTAT" | grep -oE "[0-9]+ deleti" |  grep -oE "[0-9]+"`
+    STATPROMPT=""
+    if [ -n "$PLUSSTAT" ]; then
+        STATPROMPT="+$PLUSSTAT"
+    fi
+    if [ -n "$MINUSTAT" ]; then
+        STATPROMPT="$STATPROMPT-$MINUSTAT"
+    fi
+    if [ -n "$STATPROMPT" ]; then
+        STATPROMPT="%{$fg[red]%}$STATPROMPT%{$fg[green]%}"
+    fi
+    echo "$STATPROMPT"
+}
+
+zsh_theme_git_prompt_stash () {
+    STASHCOUNT=`git stash list | wc -l`
+    if [ 0 -ne "$STASHCOUNT" ]; then
+        echo -n "%{$fg[yellow]%}"
+        printf '?%.0s' {1..$STASHCOUNT}
+        echo -n "%{$fg[green]%}"
+    fi
+}
+
+git_prompt_info () {
+    ref=$(command git symbolic-ref HEAD 2> /dev/null) || \
+    ref=$(command git rev-parse --short HEAD 2> /dev/null) || return 0
+    echo "%{$fg[green]%}[${ref#refs/heads/}$(zsh_theme_git_prompt_diff)$(zsh_theme_git_prompt_stash)] "
+}
