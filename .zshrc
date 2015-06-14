@@ -47,6 +47,8 @@ zsh_theme_git_prompt_diff () {
     DIFFSTAT=`git diff --shortstat`
     PLUSSTAT=`echo "$DIFFSTAT" | grep -oE "[0-9]+ insert" |  grep -oE "[0-9]+"`
     MINUSTAT=`echo "$DIFFSTAT" | grep -oE "[0-9]+ deleti" |  grep -oE "[0-9]+"`
+    FILESTAT=`echo "$DIFFSTAT" | grep -oE "[0-9]+ file c" |  grep -oE "[0-9]+"`
+
     STATPROMPT=""
     if [ -n "$PLUSSTAT" ]; then
         STATPROMPT="+$PLUSSTAT"
@@ -54,6 +56,10 @@ zsh_theme_git_prompt_diff () {
     if [ -n "$MINUSTAT" ]; then
         STATPROMPT="$STATPROMPT-$MINUSTAT"
     fi
+    if [ -n "$FILESTAT" ]; then
+        STATPROMPT="$STATPROMPT/$FILESTAT"
+    fi
+
     if [ -n "$STATPROMPT" ]; then
         STATPROMPT="%{$fg[red]%}$STATPROMPT%{$fg[green]%}"
     fi
