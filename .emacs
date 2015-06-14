@@ -35,6 +35,9 @@
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
+; route backups to a certain directory, copy the backups instead of mv
+(setq backup-directory-alist `(("." . "~/.emacsbackups")))
+(setq backup-by-copying t)
 
 ;;######################################################################
 ;; more fancy language-agnostic things
