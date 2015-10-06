@@ -75,10 +75,17 @@ zsh_theme_git_prompt_stash () {
     fi
 }
 
+zsh_theme_git_prompt_branch () {
+    BRANCHCOUNT=`git branch | wc -l`
+    if [ 1 -lt "$STASHCOUNT" ]; then
+        echo -n "%{$fg[blue]%}${BRANCHCOUNT}Y%{$fg[green]%}"
+    fi
+}
+
 git_prompt_info () {
     # stolen from oh-my-zsh
     ref=$(command git symbolic-ref HEAD 2> /dev/null) || \
     ref=$(command git rev-parse --short HEAD 2> /dev/null) || return 0
 
-    echo "%{$fg[green]%}[${ref#refs/heads/}$(zsh_theme_git_prompt_diff)$(zsh_theme_git_prompt_stash)] "
+    echo "%{$fg[green]%}[${ref#refs/heads/}$(zsh_theme_git_prompt_diff)$(zsh_theme_git_prompt_stash)$(zsh_theme_git_prompt_branch)] "
 }
