@@ -47,7 +47,7 @@ zsh_theme_git_prompt_diff () {
     DIFFSTAT=`git diff --shortstat`
     PLUSSTAT=`echo "$DIFFSTAT" | grep -oE "[0-9]+ insert" | grep -oE "[0-9]+"`
     MINUSTAT=`echo "$DIFFSTAT" | grep -oE "[0-9]+ deleti" | grep -oE "[0-9]+"`
-    FILESTAT=`echo "$DIFFSTAT" | grep -oE "[0-9]+ file c" | grep -oE "[0-9]+"`
+    FILESTAT=`echo "$DIFFSTAT" | grep -oE "[0-9]+ files? c" | grep -oE "[0-9]+"`
     UNTRACKEDSTAT=`git status | grep "Untracked files"`
 
     STATPROMPT=""
