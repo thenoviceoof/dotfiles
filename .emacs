@@ -89,6 +89,9 @@
 ; open .json with javascript mode
 (setq auto-mode-alist (cons '("\\.json$" . javascript-mode) auto-mode-alist))
 
+; open .jsx with javascript mode
+(setq auto-mode-alist (cons '("\\.jsx$" . javascript-mode) auto-mode-alist))
+
 ; scala mode
 (toss
  (add-to-list 'load-path "~/.emacs.d/scala-mode/")
