@@ -18,10 +18,14 @@
 (setq whitespace-style '(face empty tabs tab-mark lines-tail))
 (global-whitespace-mode t)
 (custom-set-faces
- '(whitespace-tab (( ((class color))
-                     (:foreground "#505050"))))
- '(whitespace-line (( ((class color))
-                      (:background "black")))) )
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(flymake-errline ((((class color)) (:background "red"))))
+ '(flymake-warnline ((((class color)) (:background "yellow"))))
+ '(whitespace-line ((((class color)) (:background "black"))))
+ '(whitespace-tab ((((class color)) (:foreground "#505050")))))
 
 ; for c mode, tab in 8 spaces
 (setq-default 
