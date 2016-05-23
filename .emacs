@@ -280,3 +280,28 @@
               )
             )
           )
+
+; Check if we have open clocks before closing.
+(add-hook 'kill-emacs-query-functions
+          (lambda ()
+            (let ((close-editor t))
+              (dolist (buffer (buffer-list))
+                (let ((major-mode (with-current-buffer buffer major-mode)))
+                  (if (string= "org-mode" major-mode)
+                      (with-current-buffer buffer
+                        (if (org-clock-is-active)
+                            ; active clock and yes, so return nil
+                            (if (y-or-n-p "Running clock, close?")
+                                (setq close-editor t)
+                              (setq close-editor nil)
+                              )
+                          )
+                        )
+                    )
+                  )
+                )
+              ; return the value
+              close-editor
+              )
+            )
+          )
