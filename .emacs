@@ -174,3 +174,153 @@
 ; part of ubuntu's lilypond package
 (toss
  (require 'lilypond-mode))
+
+;;##############################################################################
+; org-mode
+
+(require 'org)
+(require 'outline)
+
+(define-key global-map "\C-ca" 'org-agenda)
+; extend today until 5am
+(setq org-extend-today-until 5)
+; Have start/end of line take org-mode decorations into account
+(setq org-special-ctrl-a t)
+(setq org-special-ctrl-e t)
+; Sort agenda tasks
+(setq org-agenda-sorting-strategy '(todo-state-up timestamp-down))
+
+; Pomodoros, pulled from http://orgmode.org/worg/org-gtd-etc.html
+(add-to-list 'org-modules 'org-timer)
+(setq org-timer-default-timer 25)
+(add-hook 'org-clock-in-hook (lambda ()
+      (if (not org-timer-current-timer)
+      (org-timer-set-timer '(16)))))
+
+; Switch to in progress if we're logging time on a todo.
+; We don't use org-clock-in-switch-to-state because it's too naive.
+(add-hook 'org-clock-in-hook
+          (lambda ()
+            ; Currently on the clock element, move back to headline.
+            (outline-back-to-heading)
+            (let* ((current-headline (org-element-at-point))
+                   (current-status
+                    (org-element-property :todo-keyword current-headline)))
+              (if (not (string= "INPROGRESS" current-status))
+                  (org-todo "INPROGRESS")
+                )
+              )
+            )
+          )
+
+; Agenda commands.
+(setq org-agenda-custom-commands
+      '(; View active top level projects
+        ("h" tags-todo "+LEVEL=1+TODO={TODO\\|INPROGRESS}")
+        ; View all in progress tasks
+        ("d" tags-todo "+TODO={TODO\\|INPROGRESS}")
+        ; View sleeping tasks
+        ("1" tags-todo "+TODO=\"SL1W\"")
+        ("2" tags-todo "+TODO=\"SL1M\"")
+        ("3" tags-todo "+TODO=\"SL3M\"")
+        ("4" tags-todo "+TODO=\"SL1Y\"")
+        ("5" tags-todo "+TODO=\"SL5Y\"")
+        ("'" tags-todo "+LEVEL=1+TODO=\"SL1W\"")
+        ("," tags-todo "+LEVEL=1+TODO=\"SL1M\"")
+        ("." tags-todo "+LEVEL=1+TODO=\"SL3M\"")
+        ("p" tags-todo "+LEVEL=1+TODO=\"SL1Y\"")
+        ("y" tags-todo "+LEVEL=1+TODO=\"SL5Y\"")
+        ; View weekly timesheet
+        ("l" "Weekly Time Log"
+         ((agenda ""))
+         ((org-agenda-overriding-header "Weekly time log")
+          (org-agenda-span 'week)
+          (org-agenda-log-mode)
+          (org-agenda-show-log 'clockcheck) ; t
+          )
+         )
+        ; View daily clocktable
+        ("r" "Weekly timesheet"
+         ((agenda ""))
+         ((org-agenda-overriding-header "Weekly review")
+          (org-agenda-span 'week)
+          (org-agenda-start-with-clockreport-mode t)
+          )
+         )
+        )
+      )
+
+; Track effort changes
+(add-hook 'org-property-changed-functions
+          (lambda (property value)
+            (if (string= property "Effort")
+                (save-excursion
+                  (org-back-to-heading)
+                  (let* ((current-headline (org-element-at-point))
+                         (headline-level
+                          (org-element-property :level current-headline)))
+                    ; Make sure that we have space to edit in.
+                    (org-reveal)
+                    (end-of-line nil)
+                    (insert "\n")
+                    ; Indent the log.
+                    (insert (make-string (+ 1 headline-level) ? ))
+                    (insert (org-list-bullet-string "-") "Effort changed to ")
+                    (insert value)
+                    ; Indent the timestamp.
+                    (indent-to-column (+ 40 headline-level))
+                    (org-insert-time-stamp (current-time) t t)
+                    )
+                  )
+              )
+            )
+          )
+
+; Switch states when refiling.
+;; (add-hook 'org-after-refile-insert-hook
+;;           (lambda ()
+;;             (let ((current-headline (org-element-at-point)))
+;;               (org-up-heading-safe)
+;;               (let ((parent-level
+;;                      (org-element-property :level (org-element-at-point)))
+;;                     (parent-title
+;;                      (org-element-property :title (org-element-at-point))))
+;;                 (if (eq parent-level 1)
+;;                     (progn
+;;                       (goto-char (org-element-property :begin current-headline))
+;;                       (cond
+;;                        ((string= parent-title "Input")
+;;                         (org-todo "?"))
+;;                        ((string= parent-title "Active")
+;;                         (org-todo "⚡"))
+;;                        ((string= parent-title "Next (1w)")
+;;                         (org-todo "𝄿"))
+;;                        ((string= parent-title "Upcoming (1m)")
+;;                         (org-todo "𝄾"))
+;;                        ((string= parent-title "Planned (3m)")
+;;                         (org-todo "𝄽"))
+;;                        ((string= parent-title "Someday (1y)")
+;;                         (org-todo "𝄻"))
+;;                        ((string= parent-title "Maybe")
+;;                         (org-todo "𝄐"))
+;;                        ((string= parent-title "Done")
+;;                         (org-todo "✔"))
+;;                        ((string= parent-title "Archived")
+;;                         (org-todo "♻"))
+;;                        )
+;;                       )
+;;                   )
+;;                 )
+;;               )
+;;             )
+;;           )
+
+; Sort non-top level todos on state changes.
+;; (add-hook 'org-after-todo-state-change-hook
+;;           (lambda ()
+;;             (save-excursion ; probably doesn't work due to structure changes
+;;               (org-up-heading-safe)
+;;               (org-sort-entries t ?o))
+;;             )
+;;           )
+; See http://emacs.stackexchange.com/a/10276
