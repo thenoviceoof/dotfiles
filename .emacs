@@ -195,14 +195,62 @@
 ; Have start/end of line take org-mode decorations into account
 (setq org-special-ctrl-a t)
 (setq org-special-ctrl-e t)
-; Sort agenda tasks
-(setq org-agenda-sorting-strategy '(todo-state-up timestamp-down))
 ; Prevent invisible edits in folded text
 (setq org-catch-invisible-edits 'smart)
 ; Play a sound when clocking in/timing out
 (setq org-clock-sound "/home/thenoviceoof/.local/lib/bell.mp3")
 ; Include current task in clock reports
 (setq org-clock-report-include-clocking-task t)
+
+; Sort agenda tasks
+; TODO: Get latest timestamps from all tasks
+(setq thenoviceoof/iats-regex-start
+      (concat "\\[[0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\} [a-ZA-Z]+ "
+              "[0-9]\\{2\\}:[0-9]\\{2\\}\\]"))
+(defun thenoviceoof/task-extract-max-iats (task)
+  ; Extract the buffer/position of the task from the task string
+  (let ((task-marker (get-text-property 1 'org-marker task)))
+    (with-current-buffer (marker-buffer task-marker)
+      (goto-char (marker-position task-marker))
+      (let* ((task-elem (org-element-at-point))
+             (task-start (org-element-property :begin task-elem))
+             (task-end (org-element-property :end task-elem)))
+        (goto-char task-start)
+        ; First timestamp should be the newest.
+        (if (re-search-forward thenoviceoof/iats-regex-start task-end t)
+            ; Make sure we didn't overshoot
+            (let ((ts-end (point)))
+              (progn
+                (re-search-forward "\\[" nil t -1)
+                (let* ((ts-start (point))
+                       (ts-str (buffer-substring (+ ts-start 1) (- ts-end 1)))
+                       ; Tear out the day of the week
+                       (ts-front (substring ts-str 0 10))
+                       (ts-back (substring ts-str -6 -1))
+                       (ts-no-dow (concat ts-front ts-back)))
+                  ts-no-dow
+                  )
+                )
+              )
+          "1970-01-0100:00"
+          )
+        )
+      )
+    )
+  )
+(defun thenoviceoof/task-iats-cmp (taska taskb)
+  (cond
+   ((string< (thenoviceoof/task-extract-max-iats taska)
+             (thenoviceoof/task-extract-max-iats taskb))
+    -1)
+   ((string< (thenoviceoof/task-extract-max-iats taskb)
+             (thenoviceoof/task-extract-max-iats taska))
+    1)
+   (t 0)
+   )
+)
+(setq org-agenda-cmp-user-defined 'thenoviceoof/task-iats-cmp)
+(setq org-agenda-sorting-strategy '(todo-state-up user-defined-down))
 
 ; Always highlight the current agenda line
 ; (from http://doc.norang.ca/org-mode.html#HighlightCurrentAgendaLine)
