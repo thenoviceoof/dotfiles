@@ -208,38 +208,42 @@
 (setq thenoviceoof/iats-regex-start
       (concat "\\[[0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\} [a-ZA-Z]\\{3\\} "
               "[0-9]\\{2\\}:[0-9]\\{2\\}\\]"))
-(setq thenoviceoof/min-time-string "1970-01-0100:00")
+(setq thenoviceoof/min-time-string "1970-01-01 00:00")
 (defun thenoviceoof/task-extract-max-iats (task)
   ; Extract the buffer/position of the task from the task string
   (let ((task-marker (get-text-property 1 'org-marker task)))
-    (with-current-buffer (marker-buffer task-marker)
-      (goto-char (marker-position task-marker))
-      ; Get the bounds of the headline, including children
-      (let* ((task-elem (org-element-at-point))
-             (task-start (org-element-property :begin task-elem)))
-        (org-forward-heading-same-level 1)
-        (let* ((next-elem (org-element-at-point))
-               (next-begin (or (org-element-property :begin next-elem)
-                               (point-max)))
-               (max-time-string thenoviceoof/min-time-string))
-          (goto-char task-start)
-          ; Look at each timestamp, get the max
-          (while (re-search-forward thenoviceoof/iats-regex-start next-begin t)
-            (let* ((ts-end (point))
-                   ; Assume the timestamp always takes the same length
-                   (ts-start (- ts-end 22))
-                   (ts-str (buffer-substring (+ ts-start 1) (- ts-end 1)))
-                   ; Tear out the day of the week
-                   (ts-front (substring ts-str 0 10))
-                   (ts-back (substring ts-str -6 -1))
-                   (ts-no-dow (concat ts-front ts-back)))
-              (if (string< max-time-string ts-no-dow)
-                  (setq max-time-string ts-no-dow))
+    (if task-marker
+      (with-current-buffer (marker-buffer task-marker)
+        (goto-char (marker-position task-marker))
+        ; Get the bounds of the headline, including children
+        (let* ((task-elem (org-element-at-point))
+               (task-start (org-element-property :begin task-elem)))
+          (org-forward-heading-same-level 1)
+          (let* ((next-elem (org-element-at-point))
+                 (next-begin (or (org-element-property :begin next-elem)
+                                 (point-max)))
+                 (max-time-string thenoviceoof/min-time-string))
+            (goto-char task-start)
+            ; Look at each timestamp, get the max
+            (while (re-search-forward thenoviceoof/iats-regex-start next-begin t)
+              (let* ((ts-end (point))
+                     ; Assume the timestamp always takes the same length
+                     (ts-start (- ts-end 22))
+                     (ts-str (buffer-substring (+ ts-start 1) ts-end))
+                     ; Tear out the day of the week
+                     (ts-front (substring ts-str 0 10))
+                     (ts-back (substring ts-str -7 -1))
+                     (ts-no-dow (concat ts-front ts-back)))
+                (if (string< max-time-string ts-no-dow)
+                    (setq max-time-string ts-no-dow))
+                )
               )
+            max-time-string
             )
-          max-time-string
           )
         )
+      ; if task-marker is nil
+      thenoviceoof/min-time-string
       )
     )
   )
