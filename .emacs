@@ -201,6 +201,12 @@
 ; Include current task in clock reports
 (setq org-clock-report-include-clocking-task t)
 
+; Always highlight the current agenda line
+; (from http://doc.norang.ca/org-mode.html#HighlightCurrentAgendaLine)
+(add-hook 'org-agenda-mode-hook
+          '(lambda () (hl-line-mode 1))
+          'append)
+
 ; Pomodoros, pulled from http://orgmode.org/worg/org-gtd-etc.html
 (add-to-list 'org-modules 'org-timer)
 (setq org-timer-default-timer 25)
