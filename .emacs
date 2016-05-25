@@ -202,7 +202,7 @@
 ; Include current task in clock reports
 (setq org-clock-report-include-clocking-task t)
 
-;; Sort agenda tasks
+;; Sorting agenda tasks
 ; We define our own iats extractor instead of using tsia-down, which
 ; requires the timestamp to be used directly in the headline text.
 (setq thenoviceoof/iats-regex-start
@@ -256,7 +256,6 @@
     )
   )
 (setq org-agenda-cmp-user-defined 'thenoviceoof/task-iats-cmp)
-(setq org-agenda-sorting-strategy '(todo-state-up user-defined-up))
 
 ; Always highlight the current agenda line
 ; (from http://doc.norang.ca/org-mode.html#HighlightCurrentAgendaLine)
@@ -290,20 +289,32 @@
 ; Agenda commands.
 (setq org-agenda-custom-commands
       '(; View active top level projects
-        ("h" tags-todo "+LEVEL=1+TODO={TODO\\|INPROGRESS}")
+        ("h" tags-todo "+LEVEL=1+TODO={TODO\\|INPROGRESS}"
+         ((org-agenda-sorting-strategy '(todo-state-up user-defined-up))))
         ; View all in progress tasks
-        ("d" tags-todo "+TODO={TODO\\|INPROGRESS}")
+        ("d" tags-todo "+TODO={TODO\\|INPROGRESS}"
+         ((org-agenda-sorting-strategy '(todo-state-up user-defined-up))))
         ; View sleeping tasks
-        ("1" tags-todo "+TODO=\"SL1W\"")
-        ("2" tags-todo "+TODO=\"SL1M\"")
-        ("3" tags-todo "+TODO=\"SL3M\"")
-        ("4" tags-todo "+TODO=\"SL1Y\"")
-        ("5" tags-todo "+TODO=\"SL5Y\"")
-        ("'" tags-todo "+LEVEL=1+TODO=\"SL1W\"")
-        ("," tags-todo "+LEVEL=1+TODO=\"SL1M\"")
-        ("." tags-todo "+LEVEL=1+TODO=\"SL3M\"")
-        ("p" tags-todo "+LEVEL=1+TODO=\"SL1Y\"")
-        ("y" tags-todo "+LEVEL=1+TODO=\"SL5Y\"")
+        ("1" tags-todo "+TODO=\"SL1W\""
+         ((org-agenda-sorting-strategy '(todo-state-up user-defined-up))))
+        ("2" tags-todo "+TODO=\"SL1M\""
+         ((org-agenda-sorting-strategy '(todo-state-up user-defined-up))))
+        ("3" tags-todo "+TODO=\"SL3M\""
+         ((org-agenda-sorting-strategy '(todo-state-up user-defined-up))))
+        ("4" tags-todo "+TODO=\"SL1Y\""
+         ((org-agenda-sorting-strategy '(todo-state-up user-defined-up))))
+        ("5" tags-todo "+TODO=\"SL5Y\""
+         ((org-agenda-sorting-strategy '(todo-state-up user-defined-up))))
+        ("'" tags-todo "+LEVEL=1+TODO=\"SL1W\""
+         ((org-agenda-sorting-strategy '(todo-state-up user-defined-up))))
+        ("," tags-todo "+LEVEL=1+TODO=\"SL1M\""
+         ((org-agenda-sorting-strategy '(todo-state-up user-defined-up))))
+        ("." tags-todo "+LEVEL=1+TODO=\"SL3M\""
+         ((org-agenda-sorting-strategy '(todo-state-up user-defined-up))))
+        ("p" tags-todo "+LEVEL=1+TODO=\"SL1Y\""
+         ((org-agenda-sorting-strategy '(todo-state-up user-defined-up))))
+        ("y" tags-todo "+LEVEL=1+TODO=\"SL5Y\""
+         ((org-agenda-sorting-strategy '(todo-state-up user-defined-up))))
         ; View weekly timesheet
         ("l" "Weekly Time Log"
          ((agenda ""))
