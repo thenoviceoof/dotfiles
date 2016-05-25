@@ -10,6 +10,21 @@
 ;;######################################################################
 ;; defaults
 
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+
+ ; Flymake faces
+ '(flymake-errline ((((class color)) (:background "red"))))
+ '(flymake-warnline ((((class color)) (:background "yellow"))))
+
+ ; whitespace highlighting
+ '(whitespace-line ((((class color)) (:background "black"))))
+ '(whitespace-tab ((((class color)) (:foreground "#505050"))))
+)
+
 ; try to set the default fonts
 (set-face-attribute 'default nil :height 110)
 
@@ -17,15 +32,6 @@
 (require 'whitespace)
 (setq whitespace-style '(face empty tabs tab-mark lines-tail))
 (global-whitespace-mode t)
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(flymake-errline ((((class color)) (:background "red"))))
- '(flymake-warnline ((((class color)) (:background "yellow"))))
- '(whitespace-line ((((class color)) (:background "black"))))
- '(whitespace-tab ((((class color)) (:foreground "#505050")))))
 
 ; for c mode, tab in 8 spaces
 (setq-default 
@@ -141,9 +147,6 @@
        (list "epylint" (list local-file))))
    (add-to-list 'flymake-allowed-file-name-masks
                 '("\\.py\\'" flymake-pylint-init)))
- (custom-set-faces
-  '(flymake-errline ((((class color)) (:background "red"))))
-  '(flymake-warnline ((((class color)) (:background "yellow")))))
  ; from https://github.com/illusori/emacs-flymake-cursor
  (add-to-list 'load-path "~/.emacs.d/emacs-flymake-cursor")
  (require 'flymake-cursor)
