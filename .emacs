@@ -198,7 +198,7 @@
 ; Prevent invisible edits in folded text
 (setq org-catch-invisible-edits 'smart)
 ; Play a sound when clocking in/timing out
-(setq org-clock-sound "/home/thenoviceoof/.local/lib/bell.mp3")
+(setq org-clock-sound "/home/thenoviceoof/.local/lib/bell.wav")
 ; Include current task in clock reports
 (setq org-clock-report-include-clocking-task t)
 
