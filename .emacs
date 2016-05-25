@@ -194,6 +194,12 @@
 (setq org-special-ctrl-e t)
 ; Sort agenda tasks
 (setq org-agenda-sorting-strategy '(todo-state-up timestamp-down))
+; Prevent invisible edits in folded text
+(setq org-catch-invisible-edits 'smart)
+; Play a sound when clocking in/timing out
+(setq org-clock-sound "/home/thenoviceoof/.local/lib/bell.mp3")
+; Include current task in clock reports
+(setq org-clock-report-include-clocking-task t)
 
 ; Pomodoros, pulled from http://orgmode.org/worg/org-gtd-etc.html
 (add-to-list 'org-modules 'org-timer)
