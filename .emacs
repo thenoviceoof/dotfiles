@@ -247,9 +247,26 @@
       )
     )
   )
+
+; Agenda pre-processing
+(defun thenoviceoof/org-before-sorting-filter (task)
+  ; Set the iats for later use.
+  (let ((max-iats (thenoviceoof/task-extract-max-iats task)))
+    (put-text-property 1 (length task)
+                       'thenoviceoof/org-child-max-iats max-iats
+                       task)
+    task
+    )
+  )
+(setq org-agenda-before-sorting-filter-function
+      'thenoviceoof/org-before-sorting-filter)
+
+; Sorting agenda tasks
 (defun thenoviceoof/task-iats-cmp (taska taskb)
-  (let ((taska-max-iats (thenoviceoof/task-extract-max-iats taska))
-        (taskb-max-iats (thenoviceoof/task-extract-max-iats taskb)))
+  (let ((taska-max-iats
+         (get-text-property 1 'thenoviceoof/org-child-max-iats taska))
+        (taskb-max-iats
+         (get-text-property 1 'thenoviceoof/org-child-max-iats taskb)))
     (cond
      ((string< taska-max-iats taskb-max-iats)
       -1)
