@@ -202,7 +202,39 @@
 ; Include current task in clock reports
 (setq org-clock-report-include-clocking-task t)
 
-;; Sorting agenda tasks
+; Edit agenda text before display
+(defun thenoviceoof/org-display-parent (task)
+  ; Extract the buffer/position of the task from the task string
+  (let ((task-marker (get-text-property 1 'org-marker task)))
+    (if task-marker
+      (with-current-buffer (marker-buffer task-marker)
+        (goto-char (marker-position task-marker))
+        ; Go to the parent, if there is one
+        (if (org-up-heading-safe)
+            (let* ((parent-elem (org-element-at-point))
+                   (parent-title (org-element-property :title parent-elem))
+                   (str-props (text-properties-at 1 task))
+                   ; Turn on case-sensitive regex matching
+                   (case-fold-search nil)
+                   ; Match/cut on the state keyword
+                   (str-cut (string-match "[A-Z]+" task))
+                   (str-suffix (substring task str-cut))
+                   (str-prefix (substring parent-title 0 (- str-cut 1)))
+                   (str (concat str-prefix "|" str-suffix)))
+              ; Replicate the text properties on the string
+              (set-text-properties 0 (- str-cut 1) str-props str)
+              str
+              )
+          ; Top level, no change
+          task
+          )
+        )
+      ; No marker, no changes
+      task
+      )
+    )
+  )
+
 ; We define our own iats extractor instead of using tsia-down, which
 ; requires the timestamp to be used directly in the headline text.
 (setq thenoviceoof/iats-regex-start
@@ -250,12 +282,14 @@
 
 ; Agenda pre-processing
 (defun thenoviceoof/org-before-sorting-filter (task)
-  ; Set the iats for later use.
-  (let ((max-iats (thenoviceoof/task-extract-max-iats task)))
+  ; Modify the task line to show the parent
+  (let* ((task-with-parent (thenoviceoof/org-display-parent task))
+         (max-iats (thenoviceoof/task-extract-max-iats task-with-parent)))
+    ; Set the iats for later use
     (put-text-property 1 (length task)
                        'thenoviceoof/org-child-max-iats max-iats
-                       task)
-    task
+                       task-with-parent)
+    task-with-parent
     )
   )
 (setq org-agenda-before-sorting-filter-function
