@@ -205,8 +205,13 @@
 ; Edit agenda text before display
 (defun thenoviceoof/org-display-parent (task)
   ; Extract the buffer/position of the task from the task string
-  (let ((task-marker (get-text-property 1 'org-marker task)))
-    (if task-marker
+  (let ((task-marker (get-text-property 1 'org-marker task))
+        ; Turn on case-sensitive regex matching
+        (case-fold-search nil)
+        ; Only transform todo-line style agenda lines
+        (line-report-p (string-match "^  todo: +[0-9]" task)))
+    (if (and task-marker
+             (not line-report-p))
       (with-current-buffer (marker-buffer task-marker)
         (goto-char (marker-position task-marker))
         ; Go to the parent, if there is one
@@ -214,8 +219,6 @@
             (let* ((parent-elem (org-element-at-point))
                    (parent-title (org-element-property :title parent-elem))
                    (str-props (text-properties-at 1 task))
-                   ; Turn on case-sensitive regex matching
-                   (case-fold-search nil)
                    ; Match/cut on the state keyword
                    (str-cut (string-match "[A-Z]+" task))
                    (str-suffix (substring task str-cut))
@@ -229,7 +232,7 @@
           task
           )
         )
-      ; No marker, no changes
+      ; No marker or not right formatting, no changes
       task
       )
     )
