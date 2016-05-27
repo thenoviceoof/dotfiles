@@ -407,13 +407,7 @@
           (lambda ()
             ; Currently on the clock element, move back to headline.
             (outline-back-to-heading)
-            (let* ((current-headline (org-element-at-point))
-                   (current-status
-                    (org-element-property :todo-keyword current-headline)))
-              (if (not (string= "INPROGRESS" current-status))
-                  (org-todo "INPROGRESS")
-                )
-              )
+            (thenoviceoof/org-todo "INPROGRESS")
             )
           )
 
