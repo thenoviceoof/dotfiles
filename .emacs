@@ -201,6 +201,11 @@
 (setq org-clock-sound "/home/thenoviceoof/.local/lib/bell.wav")
 ; Include current task in clock reports
 (setq org-clock-report-include-clocking-task t)
+; Todo keywords
+(setq org-todo-keywords
+      '((sequence "?(i!)" "INPROGRESS(g!)" "TODO(t!)" "EXT(e!)"
+                  "SL1W(n!)" "SL1M(u!)" "SL3M(p!)" "SL1Y(s!)" "SL5Y(m!)"
+                  "|" "DONE(d!)" "ARCHIVED(a!)")))
 
 ; Edit agenda text before display
 (defun thenoviceoof/org-display-parent (task)
@@ -327,6 +332,74 @@
 (add-hook 'org-clock-in-hook (lambda ()
       (if (not org-timer-current-timer)
       (org-timer-set-timer '(16)))))
+
+; Propagate state changes to parents, based on state of children
+(defun thenoviceoof/org-todo (state)
+  (let ((current-state
+         (org-element-property :todo-keyword (org-element-at-point))))
+    (if (not (string= state current-state))
+        (org-todo state))
+    )
+  )
+(defun thenoviceoof/org-forward-heading-same-level (arg)
+  (let ((previous-point (point)))
+    (org-forward-heading-same-level arg)
+    (not (= previous-point (point)))
+    )
+  )
+(defun thenoviceoof/string=-prefix (stringa stringb)
+  "Return true if one string is a prefix of the other"
+  (or (string-prefix-p stringa stringb)
+      (string-prefix-p stringb stringa))
+  )
+(defun thenoviceoof/org-state-change-parent ()
+  (save-excursion
+    (if (org-up-heading-safe)
+        ; cdr of org-todo-keywords is a hack: strips out sequence/type
+        ; as a bare symbol
+        (let* ((todo-keywords (cdr (nth 0 org-todo-keywords)))
+               (max-state-index (length todo-keywords))
+               (smallest-state-index max-state-index)
+               (more-children t))
+          (save-excursion
+            ; Iterate over children
+            (org-goto-first-child)
+            (while more-children
+              (let* ((child-elem (org-element-at-point))
+                     (child-state
+                      (org-element-property :todo-keyword child-elem)))
+                (if child-state
+                    (let ((child-state-index
+                           (cl-position child-state
+                                        todo-keywords
+                                        :test 'thenoviceoof/string=-prefix)))
+                      ; Simply use the ordering of the todo keywords
+                      (if (< child-state-index smallest-state-index)
+                          (setq smallest-state-index child-state-index))))
+                ; Go to the next iteration
+                (setq more-children
+                      (thenoviceoof/org-forward-heading-same-level 1))
+                )
+              )
+            )
+          ; Update the parent
+          (if (not (= smallest-state-index max-state-index))
+              (let* ((smallest-state (nth smallest-state-index
+                                          todo-keywords))
+                     ; Strip out any suffix (ex TODO(t))
+                     (state-suffix-maybe (string-match "(" smallest-state))
+                     (without-suffix (if state-suffix-maybe
+                                         (substring smallest-state
+                                                    0 state-suffix-maybe)
+                                       (smallest-state))))
+                (thenoviceoof/org-todo without-suffix))
+            )
+          )
+      )
+    )
+  )
+(add-hook 'org-after-todo-state-change-hook
+          'thenoviceoof/org-state-change-parent)
 
 ; Switch to in progress if we're logging time on a todo.
 ; We don't use org-clock-in-switch-to-state because it's too naive.
