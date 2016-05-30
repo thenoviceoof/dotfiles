@@ -216,6 +216,17 @@
       )
 
 ; Edit agenda text before display
+(defun thenoviceoof/substring-or-pad (string start end)
+  "Depending on the cut to make, either pad the end of the
+string, or substring it."
+  (if (< (length string) end)
+      (let* ((padding (- end (length string)))
+             (string (concat string (make-string padding ? ))))
+        (substring string start end)
+        )
+    (substring string start end)
+    )
+  )
 (defun thenoviceoof/org-display-parent (task)
   ; Extract the buffer/position of the task from the task string
   (let ((task-marker (get-text-property 1 'org-marker task))
@@ -235,7 +246,8 @@
                    ; Match/cut on the state keyword
                    (str-cut (string-match "[A-Z]+" task))
                    (str-suffix (substring task str-cut))
-                   (str-prefix (substring parent-title 0 (- str-cut 1)))
+                   (str-prefix (thenoviceoof/substring-or-pad
+                                parent-title 0 (- str-cut 1)))
                    (str (concat str-prefix "|" str-suffix)))
               ; Replicate the text properties on the string
               (set-text-properties 0 (- str-cut 1) str-props str)
