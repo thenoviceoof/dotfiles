@@ -2,10 +2,10 @@
 ################################################################################
 # Starts org-mode editor.
 
-TODOPATH="$HOME/todo.org"
+TODOPATH="$HOME/org/todo.org"
 
 # First, back up the database.
-BACKUPDIR="$HOME/backups/todo"
+BACKUPDIR="$HOME/org/backups"
 mkdir -p "$BACKUPDIR"
 DATE=`date +"%Y%m%d"`
 BACKUPNAME="todo-backup_$DATE.org"
