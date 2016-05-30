@@ -214,6 +214,9 @@
         ("SL1Y" . "magenta")
         ("SL5Y" . "magenta"))
       )
+; Set up MobileOrg
+(setq org-mobile-directory "/orgmode@raspberrypi.local:/data/current/org")
+(setq org-mobile-inbox-for-pull "/home/thenoviceoof/org/input.org")
 
 ; Edit agenda text before display
 (defun thenoviceoof/substring-or-pad (string start end)
