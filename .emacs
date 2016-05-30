@@ -206,6 +206,14 @@
       '((sequence "?(i!)" "INPROGRESS(g!)" "TODO(t!)" "EXT(e!)"
                   "SL1W(n!)" "SL1M(u!)" "SL3M(p!)" "SL1Y(s!)" "SL5Y(m!)"
                   "|" "DONE(d!)" "ARCHIVED(a!)")))
+; Use non-default colors for sleeping states
+(setq org-todo-keyword-faces
+      '(("SL1W" . "magenta")
+        ("SL1M" . "magenta")
+        ("SL3M" . "magenta")
+        ("SL1Y" . "magenta")
+        ("SL5Y" . "magenta"))
+      )
 
 ; Edit agenda text before display
 (defun thenoviceoof/org-display-parent (task)
