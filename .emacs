@@ -368,6 +368,11 @@
         (let* ((todo-keywords (cdr (nth 0 org-todo-keywords)))
                (max-state-index (length todo-keywords))
                (smallest-state-index max-state-index)
+               ; Special casing: switch to in progress if any tasks
+               ; are already done.
+               (finished-state-index
+                (cl-position "|" todo-keywords :test 'string=))
+               (finished-children-p nil)
                (more-children t))
           (save-excursion
             ; Iterate over children
@@ -383,7 +388,12 @@
                                         :test 'thenoviceoof/string=-prefix)))
                       ; Simply use the ordering of the todo keywords
                       (if (< child-state-index smallest-state-index)
-                          (setq smallest-state-index child-state-index))))
+                          (setq smallest-state-index child-state-index))
+                      ; Check if there are any done states
+                      (if (< finished-state-index child-state-index)
+                          (setq finished-children-p t))
+                      )
+                  )
                 ; Go to the next iteration
                 (setq more-children
                       (thenoviceoof/org-forward-heading-same-level 1))
@@ -400,7 +410,12 @@
                                          (substring smallest-state
                                                     0 state-suffix-maybe)
                                        (smallest-state))))
-                (thenoviceoof/org-todo without-suffix))
+                ; Special case handling of mixed done/todo
+                (if (and finished-children-p (string= without-suffix "TODO"))
+                    (thenoviceoof/org-todo "INPROGRESS")
+                  (thenoviceoof/org-todo without-suffix)
+                  )
+                )
             )
           )
       )
