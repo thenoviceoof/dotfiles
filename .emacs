@@ -247,6 +247,21 @@ string, or substring it."
       )
     )
   )
+(defun thenoviceoof/org-effort-sum ()
+  "Sum all the efforts from the available headings"
+  (let ((previous-point -1)
+        (total-minutes 0))
+    (while (not (= previous-point (point)))
+      (let* ((effort (or (org-entry-get (point) "Effort") "0:00")))
+        (setq total-minutes (+ total-minutes
+                               (org-hh:mm-string-to-minutes effort)))
+        )
+      (setq previous-point (point))
+      (outline-next-visible-heading 1)
+      )
+    total-minutes
+    )
+  )
 (defun thenoviceoof/org-agenda-line-prefix-work-done
   (agenda-properties current-line)
   "Add a unicode meter indicating how much work was done."
@@ -256,9 +271,8 @@ string, or substring it."
       (save-restriction
         (goto-char (marker-position task-marker))
         (org-narrow-to-subtree)
-        ; TODO: use total subtree effort time
         (let ((clocked-time (org-clock-sum))
-              (effort-time (plist-get agenda-properties 'effort-minutes)))
+              (effort-time (thenoviceoof/org-effort-sum)))
           ; Calculate fractions
           (if (and effort-time clocked-time
                    (< 0 effort-time) (< 0 clocked-time))
