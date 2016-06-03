@@ -230,7 +230,67 @@ string, or substring it."
     (substring string start end)
     )
   )
-(defun thenoviceoof/org-display-parent (task)
+(defun thenoviceoof/org-agenda-line-prefix-parent-title
+  (agenda-properties current-line)
+  "Return the truncated parent title (if there is one), or an empty string."
+  (let ((task-marker (plist-get agenda-properties 'org-marker)))
+    (with-current-buffer (marker-buffer task-marker)
+      (goto-char (marker-position task-marker))
+      (if (org-up-heading-safe)
+          (let* ((parent-elem (org-element-at-point))
+                 (parent-title (org-element-property :title parent-elem))
+                 (str (thenoviceoof/substring-or-pad parent-title 0 (length current-line))))
+            str
+            )
+        (make-string (length current-line) ? )
+        )
+      )
+    )
+  )
+(defun thenoviceoof/org-agenda-line-prefix-work-done
+  (agenda-properties current-line)
+  "Add a unicode meter indicating how much work was done."
+  (let ((task-marker (plist-get agenda-properties 'org-marker))
+        (cur-len (length current-line)))
+    (with-current-buffer (marker-buffer task-marker)
+      (save-restriction
+        (goto-char (marker-position task-marker))
+        (org-narrow-to-subtree)
+        ; TODO: use total subtree effort time
+        (let ((clocked-time (org-clock-sum))
+              (effort-time (plist-get agenda-properties 'effort-minutes)))
+          ; Calculate fractions
+          (if (and effort-time clocked-time
+                   (< 0 effort-time) (< 0 clocked-time))
+              (let* ((fraction (/ (float clocked-time) effort-time))
+                     (symbol
+                      (cond ((< fraction 0.001) " ")
+                            ((< fraction 0.125) "▁")
+                            ((< fraction 0.250) "▂")
+                            ((< fraction 0.375) "▃")
+                            ((< fraction 0.500) "▄")
+                            ((< fraction 0.625) "▅")
+                            ((< fraction 0.750) "▆")
+                            ((< fraction 0.875) "▇")
+                            ; Overdue task
+                            ((> fraction 1.500) "▙")
+                            (t                  "█"))))
+              (concat (substring current-line 0 (- cur-len 2))
+                      symbol
+                      (substring current-line (- cur-len 1) cur-len))
+              )
+            current-line
+            )
+          )
+        )
+      )
+    )
+  )
+(defun thenoviceoof/org-agenda-line-prefix-pipe (agenda-properties current-line)
+  "Add a | to the end of the prefix."
+  (concat (substring current-line 0 (- (length current-line) 1)) "|"))
+; TODO: replace this with proper use of org-agenda-prefix-format
+(defun thenoviceoof/org-agenda-line-transform (task)
   ; Extract the buffer/position of the task from the task string
   (let ((task-marker (get-text-property 1 'org-marker task))
         ; Turn on case-sensitive regex matching
@@ -239,27 +299,23 @@ string, or substring it."
         (line-report-p (string-match "^  todo: +[0-9]" task)))
     (if (and task-marker
              (not line-report-p))
-      (with-current-buffer (marker-buffer task-marker)
-        (goto-char (marker-position task-marker))
-        ; Go to the parent, if there is one
-        (if (org-up-heading-safe)
-            (let* ((parent-elem (org-element-at-point))
-                   (parent-title (org-element-property :title parent-elem))
-                   (str-props (text-properties-at 1 task))
-                   ; Match/cut on the state keyword
-                   (str-cut (string-match "[A-Z]+" task))
-                   (str-suffix (substring task str-cut))
-                   (str-prefix (thenoviceoof/substring-or-pad
-                                parent-title 0 (- str-cut 1)))
-                   (str (concat str-prefix "|" str-suffix)))
-              ; Replicate the text properties on the string
-              (set-text-properties 0 (- str-cut 1) str-props str)
-              str
-              )
-          ; Top level, no change
-          task
+        (let* ((str-props (text-properties-at 1 task))
+               (str-cut (string-match "[A-Z]+" task))
+               (str-prefix (substring task 0 str-cut))
+               ; Functions to transform the prefix string
+               (str-prefix (thenoviceoof/org-agenda-line-prefix-parent-title
+                            str-props str-prefix))
+               (str-prefix (thenoviceoof/org-agenda-line-prefix-work-done
+                            str-props str-prefix))
+               (str-prefix (thenoviceoof/org-agenda-line-prefix-pipe
+                            str-props str-prefix))
+               ; End transforms
+               (str-suffix (substring task str-cut))
+               (str (concat str-prefix str-suffix)))
+          ; Replicate the text properties on the string
+          (set-text-properties 0 (- str-cut 1) str-props str)
+          str
           )
-        )
       ; No marker or not right formatting, no changes
       task
       )
@@ -314,7 +370,7 @@ string, or substring it."
 ; Agenda pre-processing
 (defun thenoviceoof/org-before-sorting-filter (task)
   ; Modify the task line to show the parent
-  (let* ((task-with-parent (thenoviceoof/org-display-parent task))
+  (let* ((task-with-parent (thenoviceoof/org-agenda-line-transform task))
          (max-iats (thenoviceoof/task-extract-max-iats task-with-parent)))
     ; Set the iats for later use
     (put-text-property 1 (length task)
