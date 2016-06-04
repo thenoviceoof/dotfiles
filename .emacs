@@ -230,109 +230,84 @@ string, or substring it."
     (substring string start end)
     )
   )
-(defun thenoviceoof/org-agenda-line-prefix-parent-title
-  (agenda-properties current-line)
+(defun thenoviceoof/org-agenda-line-prefix-parent-title (current-line)
   "Return the truncated parent title (if there is one), or an empty string."
-  (let ((task-marker (plist-get agenda-properties 'org-marker)))
-    (with-current-buffer (marker-buffer task-marker)
-      (goto-char (marker-position task-marker))
-      (if (org-up-heading-safe)
-          (let* ((parent-elem (org-element-at-point))
-                 (parent-title (org-element-property :title parent-elem))
-                 (str (thenoviceoof/substring-or-pad parent-title 0 (length current-line))))
-            str
-            )
-        (make-string (length current-line) ? )
-        )
+  (save-excursion
+    (if (org-up-heading-safe)
+        (let* ((parent-elem (org-element-at-point))
+               (parent-title (org-element-property :title parent-elem))
+               (str (thenoviceoof/substring-or-pad parent-title
+                                                   0 (length current-line))))
+          str
+          )
+      current-line
       )
     )
   )
 (defun thenoviceoof/org-effort-sum ()
   "Sum all the efforts from the available headings"
-  (let ((previous-point -1)
-        (total-minutes 0))
-    (while (not (= previous-point (point)))
-      (let* ((effort (or (org-entry-get (point) "Effort") "0:00")))
-        (setq total-minutes (+ total-minutes
-                               (org-hh:mm-string-to-minutes effort)))
-        )
-      (setq previous-point (point))
-      (outline-next-visible-heading 1)
-      )
-    total-minutes
-    )
-  )
-(defun thenoviceoof/org-agenda-line-prefix-work-done
-  (agenda-properties current-line)
-  "Add a unicode meter indicating how much work was done."
-  (let ((task-marker (plist-get agenda-properties 'org-marker))
-        (cur-len (length current-line)))
-    (with-current-buffer (marker-buffer task-marker)
-      (save-restriction
-        (goto-char (marker-position task-marker))
-        (org-narrow-to-subtree)
-        (let ((clocked-time (org-clock-sum))
-              (effort-time (thenoviceoof/org-effort-sum)))
-          ; Calculate fractions
-          (if (and effort-time clocked-time
-                   (< 0 effort-time) (< 0 clocked-time))
-              (let* ((fraction (/ (float clocked-time) effort-time))
-                     (symbol
-                      (cond ((< fraction 0.001) " ")
-                            ((< fraction 0.125) "▁")
-                            ((< fraction 0.250) "▂")
-                            ((< fraction 0.375) "▃")
-                            ((< fraction 0.500) "▄")
-                            ((< fraction 0.625) "▅")
-                            ((< fraction 0.750) "▆")
-                            ((< fraction 0.875) "▇")
-                            ; Overdue task
-                            ((> fraction 1.500) "▙")
-                            (t                  "█"))))
-              (concat (substring current-line 0 (- cur-len 2))
-                      symbol
-                      (substring current-line (- cur-len 1) cur-len))
-              )
-            current-line
-            )
+  (save-excursion
+    (let ((previous-point -1)
+          (total-minutes 0))
+      (while (not (= previous-point (point)))
+        (let* ((effort (or (org-entry-get (point) "Effort") "0:00")))
+          (setq total-minutes (+ total-minutes
+                                 (org-hh:mm-string-to-minutes effort)))
           )
+        (setq previous-point (point))
+        (outline-next-visible-heading 1)
+        )
+      total-minutes
+      )
+    )
+  )
+(defun thenoviceoof/org-agenda-line-prefix-work-done (current-line)
+  "Add a unicode meter indicating how much work was done."
+  (save-restriction
+    (org-narrow-to-subtree)
+    (let ((clocked-time (org-clock-sum))
+          (effort-time (thenoviceoof/org-effort-sum))
+          (cur-len (length current-line)))
+      ; Calculate fractions
+      (if (and effort-time clocked-time
+               (< 0 effort-time) (< 0 clocked-time))
+          (let* ((fraction (/ (float clocked-time) effort-time))
+                 (symbol
+                  (cond ((< fraction 0.001) " ")
+                        ((< fraction 0.125) "▁")
+                        ((< fraction 0.250) "▂")
+                        ((< fraction 0.375) "▃")
+                        ((< fraction 0.500) "▄")
+                        ((< fraction 0.625) "▅")
+                        ((< fraction 0.750) "▆")
+                        ((< fraction 0.875) "▇")
+                        ; Overdue task
+                        ((> fraction 1.500) "▙")
+                        (t                  "█"))))
+            (concat (substring current-line 0 (- cur-len 2))
+                    symbol
+                    (substring current-line (- cur-len 1) cur-len))
+            )
+        current-line
         )
       )
     )
   )
-(defun thenoviceoof/org-agenda-line-prefix-pipe (agenda-properties current-line)
+(defun thenoviceoof/org-agenda-line-prefix-pipe (current-line)
   "Add a | to the end of the prefix."
   (concat (substring current-line 0 (- (length current-line) 1)) "|"))
-; TODO: replace this with proper use of org-agenda-prefix-format
-(defun thenoviceoof/org-agenda-line-transform (task)
-  ; Extract the buffer/position of the task from the task string
-  (let ((task-marker (get-text-property 1 'org-marker task))
-        ; Turn on case-sensitive regex matching
-        (case-fold-search nil)
-        ; Only transform todo-line style agenda lines
-        (line-report-p (string-match "^  todo: +[0-9]" task)))
-    (if (and task-marker
-             (not line-report-p))
-        (let* ((str-props (text-properties-at 1 task))
-               (str-cut (string-match "[A-Z]+" task))
-               (str-prefix (substring task 0 str-cut))
-               ; Functions to transform the prefix string
-               (str-prefix (thenoviceoof/org-agenda-line-prefix-parent-title
-                            str-props str-prefix))
-               (str-prefix (thenoviceoof/org-agenda-line-prefix-work-done
-                            str-props str-prefix))
-               (str-prefix (thenoviceoof/org-agenda-line-prefix-pipe
-                            str-props str-prefix))
-               ; End transforms
-               (str-suffix (substring task str-cut))
-               (str (concat str-prefix str-suffix)))
-          ; Replicate the text properties on the string
-          (set-text-properties 0 (- str-cut 1) str-props str)
-          str
-          )
-      ; No marker or not right formatting, no changes
-      task
-      )
+(defun thenoviceoof/org-agenda-prefix (&optional str-length)
+  (if (not str-length)
+      (setq str-length 15))
+  (let* ((str-prefix (make-string str-length ? ))
+                                        ; Functions to transform the prefix string
+         (str-prefix (thenoviceoof/org-agenda-line-prefix-parent-title
+                      str-prefix))
+         (str-prefix (thenoviceoof/org-agenda-line-prefix-work-done
+                      str-prefix))
+         (str-prefix (thenoviceoof/org-agenda-line-prefix-pipe
+                      str-prefix)))
+    str-prefix
     )
   )
 
@@ -383,14 +358,13 @@ string, or substring it."
 
 ; Agenda pre-processing
 (defun thenoviceoof/org-before-sorting-filter (task)
-  ; Modify the task line to show the parent
-  (let* ((task-with-parent (thenoviceoof/org-agenda-line-transform task))
-         (max-iats (thenoviceoof/task-extract-max-iats task-with-parent)))
+  (let* ((max-iats (thenoviceoof/task-extract-max-iats task)))
     ; Set the iats for later use
     (put-text-property 1 (length task)
-                       'thenoviceoof/org-child-max-iats max-iats
-                       task-with-parent)
-    task-with-parent
+                       'thenoviceoof/org-child-max-iats
+                       max-iats
+                       task)
+    task
     )
   )
 (setq org-agenda-before-sorting-filter-function
@@ -523,31 +497,43 @@ string, or substring it."
 (setq org-agenda-custom-commands
       '(; View active top level projects
         ("h" tags-todo "+LEVEL=1+TODO={TODO\\|INPROGRESS}"
-         ((org-agenda-sorting-strategy '(todo-state-up user-defined-up))))
+         ((org-agenda-sorting-strategy '(todo-state-up user-defined-up))
+          (org-agenda-prefix-format "%(thenoviceoof/org-agenda-prefix 5)")))
         ; View all in progress tasks
         ("d" tags-todo "+TODO={TODO\\|INPROGRESS}"
-         ((org-agenda-sorting-strategy '(todo-state-up user-defined-up))))
+         ((org-agenda-sorting-strategy '(todo-state-up user-defined-up))
+          (org-agenda-prefix-format "%(thenoviceoof/org-agenda-prefix)")))
         ; View sleeping tasks
         ("1" tags-todo "+TODO=\"SL1W\""
-         ((org-agenda-sorting-strategy '(todo-state-up user-defined-up))))
+         ((org-agenda-sorting-strategy '(todo-state-up user-defined-up))
+          (org-agenda-prefix-format "%(thenoviceoof/org-agenda-prefix)")))
         ("2" tags-todo "+TODO=\"SL1M\""
-         ((org-agenda-sorting-strategy '(todo-state-up user-defined-up))))
+         ((org-agenda-sorting-strategy '(todo-state-up user-defined-up))
+          (org-agenda-prefix-format "%(thenoviceoof/org-agenda-prefix)")))
         ("3" tags-todo "+TODO=\"SL3M\""
-         ((org-agenda-sorting-strategy '(todo-state-up user-defined-up))))
+         ((org-agenda-sorting-strategy '(todo-state-up user-defined-up))
+          (org-agenda-prefix-format "%(thenoviceoof/org-agenda-prefix)")))
         ("4" tags-todo "+TODO=\"SL1Y\""
-         ((org-agenda-sorting-strategy '(todo-state-up user-defined-up))))
+         ((org-agenda-sorting-strategy '(todo-state-up user-defined-up))
+          (org-agenda-prefix-format "%(thenoviceoof/org-agenda-prefix)")))
         ("5" tags-todo "+TODO=\"SL5Y\""
-         ((org-agenda-sorting-strategy '(todo-state-up user-defined-up))))
+         ((org-agenda-sorting-strategy '(todo-state-up user-defined-up))
+          (org-agenda-prefix-format "%(thenoviceoof/org-agenda-prefix)")))
         ("'" tags-todo "+LEVEL=1+TODO=\"SL1W\""
-         ((org-agenda-sorting-strategy '(todo-state-up user-defined-up))))
+         ((org-agenda-sorting-strategy '(todo-state-up user-defined-up))
+          (org-agenda-prefix-format "%(thenoviceoof/org-agenda-prefix 5)")))
         ("," tags-todo "+LEVEL=1+TODO=\"SL1M\""
-         ((org-agenda-sorting-strategy '(todo-state-up user-defined-up))))
+         ((org-agenda-sorting-strategy '(todo-state-up user-defined-up))
+          (org-agenda-prefix-format "%(thenoviceoof/org-agenda-prefix 5)")))
         ("." tags-todo "+LEVEL=1+TODO=\"SL3M\""
-         ((org-agenda-sorting-strategy '(todo-state-up user-defined-up))))
+         ((org-agenda-sorting-strategy '(todo-state-up user-defined-up))
+          (org-agenda-prefix-format "%(thenoviceoof/org-agenda-prefix 5)")))
         ("p" tags-todo "+LEVEL=1+TODO=\"SL1Y\""
-         ((org-agenda-sorting-strategy '(todo-state-up user-defined-up))))
+         ((org-agenda-sorting-strategy '(todo-state-up user-defined-up))
+          (org-agenda-prefix-format "%(thenoviceoof/org-agenda-prefix 5)")))
         ("y" tags-todo "+LEVEL=1+TODO=\"SL5Y\""
-         ((org-agenda-sorting-strategy '(todo-state-up user-defined-up))))
+         ((org-agenda-sorting-strategy '(todo-state-up user-defined-up))
+          (org-agenda-prefix-format "%(thenoviceoof/org-agenda-prefix 5)")))
         ; View weekly timesheet
         ("l" "Weekly Time Log"
          ((agenda ""))
