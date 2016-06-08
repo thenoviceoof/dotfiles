@@ -333,7 +333,10 @@ string, or substring it."
                  (max-time-string thenoviceoof/min-time-string))
             (goto-char task-start)
             ; Look at each timestamp, get the max
-            (while (re-search-forward thenoviceoof/iats-regex-start next-begin t)
+            ; NOTE The first condition prevents "Invalid search bound
+            ; (wrong side of point)"
+            (while (and (< (point) next-begin)
+                        (re-search-forward thenoviceoof/iats-regex-start next-begin t))
               (let* ((ts-end (point))
                      ; Assume the timestamp always takes the same length
                      (ts-start (- ts-end 22))
