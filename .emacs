@@ -214,6 +214,9 @@
         ("SL1Y" . "magenta")
         ("SL5Y" . "magenta"))
       )
+; Use the full width of a standard buffer on bitera.
+(setq org-tags-column -80)
+(setq org-agenda-tags-column 75)
 ; Set up MobileOrg
 (setq org-mobile-directory "/orgmode@raspberrypi.local:/data/current/org")
 (setq org-mobile-inbox-for-pull "/home/thenoviceoof/org/input.org")
