@@ -217,6 +217,8 @@
 ; Use the full width of a standard buffer on bitera.
 (setq org-tags-column -80)
 (setq org-agenda-tags-column 75)
+; Use F9 for C-c a
+(global-set-key (kbd "<f9>") 'org-agenda)
 ; Set up MobileOrg
 (setq org-mobile-directory "/orgmode@raspberrypi.local:/data/current/org")
 (setq org-mobile-inbox-for-pull "/home/thenoviceoof/org/input.org")
