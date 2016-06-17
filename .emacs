@@ -402,9 +402,18 @@ string, or substring it."
 ; Pomodoros, pulled from http://orgmode.org/worg/org-gtd-etc.html
 (add-to-list 'org-modules 'org-timer)
 (setq org-timer-default-timer 25)
-(add-hook 'org-clock-in-hook (lambda ()
-      (if (not org-timer-current-timer)
-      (org-timer-set-timer '(16)))))
+(add-hook 'org-clock-in-hook
+          (lambda ()
+            (if (not org-timer-current-timer)
+                (org-timer-set-timer '(16)))
+            )
+          )
+(add-hook 'org-clock-out-hook
+          (lambda ()
+            (if org-timer-current-timer
+                (org-timer-stop))
+            )
+          )
 
 ; Propagate state changes to parents, based on state of children
 (defun thenoviceoof/org-todo (state)
