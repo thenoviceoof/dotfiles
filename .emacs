@@ -183,6 +183,12 @@
 (toss
  (require 'lilypond-mode))
 
+;; rust mode
+; https://github.com/rust-lang/rust-mode
+(toss
+ (add-to-list 'load-path "~/.emacs.d/rust-mode")
+ (require 'rust-mode))
+
 ;;##############################################################################
 ; org-mode
 
