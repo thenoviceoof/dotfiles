@@ -419,7 +419,19 @@ string, or substring it."
 (add-hook 'org-clock-out-hook
           (lambda ()
             (if org-timer-current-timer
-                (org-timer-stop))
+                (progn
+                  (org-timer-stop)
+                  ; Fix a bug with the current timer continuing. Fixed
+                  ; at org-mode HEAD.
+                  ; TODO: remove after upgrading org-mode past 173b0cb6
+                  ; (Dec 2014)
+                  (if org-timer-current-timer
+                      (progn
+                        (cancel-timer org-timer-current-timer)
+                        (setq org-timer-current-timer nil))
+                    )
+                  )
+              )
             )
           )
 
