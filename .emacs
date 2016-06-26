@@ -241,17 +241,17 @@ string, or substring it."
     (substring string start end)
     )
   )
-(defun thenoviceoof/org-agenda-line-prefix-parent-title (current-line)
+(defun thenoviceoof/org-agenda-line-prefix-parent-title (prefix-length)
   "Return the truncated parent title (if there is one), or an empty string."
   (save-excursion
     (if (org-up-heading-safe)
         (let* ((parent-elem (org-element-at-point))
                (parent-title (org-element-property :title parent-elem))
                (str (thenoviceoof/substring-or-pad parent-title
-                                                   0 (length current-line))))
+                                                   0 prefix-length)))
           str
           )
-      current-line
+      (make-string prefix-length ? )
       )
     )
   )
@@ -272,53 +272,42 @@ string, or substring it."
       )
     )
   )
-(defun thenoviceoof/org-agenda-line-prefix-work-done (current-line)
+(defun thenoviceoof/org-agenda-line-prefix-work-done ()
   "Add a unicode meter indicating how much work was done."
   (save-restriction
     (org-narrow-to-subtree)
     (let ((clocked-time (org-clock-sum))
-          (effort-time (thenoviceoof/org-effort-sum))
-          (cur-len (length current-line)))
+          (effort-time (thenoviceoof/org-effort-sum)))
       ; Calculate fractions
       (if (and effort-time clocked-time
                (< 0 effort-time) (< 0 clocked-time))
-          (let* ((fraction (/ (float clocked-time) effort-time))
-                 (symbol
-                  (cond ((< fraction 0.001) " ")
-                        ((< fraction 0.125) "▁")
-                        ((< fraction 0.250) "▂")
-                        ((< fraction 0.375) "▃")
-                        ((< fraction 0.500) "▄")
-                        ((< fraction 0.625) "▅")
-                        ((< fraction 0.750) "▆")
-                        ((< fraction 0.875) "▇")
-                        ; Overdue task
-                        ((> fraction 1.500) "▙")
-                        (t                  "█"))))
-            (concat (substring current-line 0 (- cur-len 2))
-                    symbol
-                    (substring current-line (- cur-len 1) cur-len))
-            )
-        current-line
+          (let* ((fraction (/ (float clocked-time) effort-time)))
+            (cond ((< fraction 0.001) " ")
+                  ((< fraction 0.125) "▁")
+                  ((< fraction 0.250) "▂")
+                  ((< fraction 0.375) "▃")
+                  ((< fraction 0.500) "▄")
+                  ((< fraction 0.625) "▅")
+                  ((< fraction 0.750) "▆")
+                  ((< fraction 0.875) "▇")
+                  ; Overdue task
+                  ((> fraction 1.500) "▙")
+                  (t                  "█")))
+        nil
         )
       )
     )
   )
-(defun thenoviceoof/org-agenda-line-prefix-pipe (current-line)
-  "Add a | to the end of the prefix."
-  (concat (substring current-line 0 (- (length current-line) 1)) "|"))
 (defun thenoviceoof/org-agenda-prefix (&optional str-length)
   (if (not str-length)
       (setq str-length 15))
-  (let* ((str-prefix (make-string str-length ? ))
-                                        ; Functions to transform the prefix string
-         (str-prefix (thenoviceoof/org-agenda-line-prefix-parent-title
-                      str-prefix))
-         (str-prefix (thenoviceoof/org-agenda-line-prefix-work-done
-                      str-prefix))
-         (str-prefix (thenoviceoof/org-agenda-line-prefix-pipe
-                      str-prefix)))
-    str-prefix
+  (let* ((str-suffixes (list (thenoviceoof/org-agenda-line-prefix-work-done)
+                             "|"))
+         (str-suffix (reduce #'concat (remove-if #'null str-suffixes)))
+         (str-prefix-length (- str-length (length str-suffix)))
+         (str-prefix
+          (thenoviceoof/org-agenda-line-prefix-parent-title str-prefix-length)))
+    (concat str-prefix str-suffix)
     )
   )
 
