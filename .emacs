@@ -255,6 +255,17 @@ string, or substring it."
       )
     )
   )
+(defun thenoviceoof/org-agenda-line-prefix-childrenp ()
+  "Return whether this task has children, or nil"
+  (save-excursion
+    (let ((this-point (point)))
+      (org-goto-first-child)
+      (if (not (equalp (point) this-point))
+          "⬇"
+        nil)
+      )
+    )
+  )
 (defun thenoviceoof/org-effort-sum ()
   "Sum all the efforts from the available headings"
   (save-excursion
@@ -301,7 +312,8 @@ string, or substring it."
 (defun thenoviceoof/org-agenda-prefix (&optional str-length)
   (if (not str-length)
       (setq str-length 15))
-  (let* ((str-suffixes (list (thenoviceoof/org-agenda-line-prefix-work-done)
+  (let* ((str-suffixes (list (thenoviceoof/org-agenda-line-prefix-childrenp)
+                             (thenoviceoof/org-agenda-line-prefix-work-done)
                              "|"))
          (str-suffix (reduce #'concat (remove-if #'null str-suffixes)))
          (str-prefix-length (- str-length (length str-suffix)))
