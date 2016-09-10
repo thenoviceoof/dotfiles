@@ -16,6 +16,11 @@ for file in $(ls | grep -v html | grep -v \.sh); do
     proselint $tmpfile
     echo ""
 
+    # Find unescaped markdown link paretheses.
+    echo "---------- Markdown parentheses"
+    grep '](http.*(.*[^\]).*)' $tmpfile
+    echo ""
+
     ## TODO: add professor scripts here
 
     # Generate markdown.
