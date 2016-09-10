@@ -21,8 +21,31 @@ for file in $(ls | grep -v html | grep -v \.sh); do
     grep '](http.*(.*[^\]).*)' $tmpfile
     echo ""
 
-    ## TODO: add professor scripts here
+    ############################################################
+    # Professor scripts
+    # http://matt.might.net/articles/shell-scripts-for-passive-voice-weasel-words-duplicates/
 
+    echo "---------- Weasel words"
+    # Weasel words
+    professor_weasels="many|various|very|fairly|several|extremely\
+|exceedingly|quite|remarkably|few|surprisingly\
+|mostly|largely|huge|tiny|((are|is) a number)\
+|excellent|interestingly|significantly\
+|substantially|clearly|vast|relatively|completely"
+    egrep -i -n --color "\\b($professor_weasels)\\b" $tmpfile
+    echo ""
+
+    # Passive voice detection is too noisy.
+
+    # Lexical illusions are covered by proselint, but in a silly that
+    # doesn't actually extend across lines.
+
+    # Do lexical illusion detection myself
+    echo "---------- Lexical illusions (repeated)"
+    grep -Pzo '^.*\s(\w+)\n\1\s.*$' $tmpfile
+    echo ""
+
+    ############################################################
     # Generate markdown.
     echo "---------- Generating markdown..."
     mdfile="$file.html"
