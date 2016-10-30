@@ -20,6 +20,7 @@ import XMonad.Prompt.Shell
 
 
 modkey = mod4Mask
+altMask = mod1Mask
 -- TODO: clean this up
 myManageHook = composeAll
                [ className =? "Do" --> doFloat
@@ -47,6 +48,9 @@ myKeys = [ -- M-m shows the next empty workspace
          [
            -- Ctrl-Tab to bring up the prompt
            ((controlMask, xK_Tab), shellPrompt defaultXPConfig)
+           -- Ctrl-Alt-l locks the screen
+         , ((controlMask .|. altMask, xK_l),
+            spawn "gnome-screensaver-command --lock")
          ]
 
 -- By default, split the last desktop unevenly (pidgin layout)
