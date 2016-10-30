@@ -36,7 +36,8 @@ then
     ln -s ~/.local/bin/genpass.py ~/.local/bin/genpass
 fi
 
-cp -R .xmonad ~/.xmonad
+mkdir -p ~/.xmonad
+cp .xmonad/xmonad.hs ~/.xmonad/xmonad.hs
 
 cp .gitignore_global ~/
 git config --global core.excludesfile ~/.gitignore_global
