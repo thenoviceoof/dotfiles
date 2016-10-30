@@ -15,6 +15,9 @@ import qualified XMonad.StackSet as W
 
 import XMonad.Hooks.ICCCMFocus
 
+import XMonad.Prompt
+import XMonad.Prompt.Shell
+
 
 modkey = mod4Mask
 -- TODO: clean this up
@@ -40,7 +43,12 @@ myKeys = [ -- M-m shows the next empty workspace
          | (k, i) <- zip moreKeys moreWorkspaces
          , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]
          ]
-         
+         ++
+         [
+           -- Ctrl-Tab to bring up the prompt
+           ((controlMask, xK_Tab), shellPrompt defaultXPConfig)
+         ]
+
 -- By default, split the last desktop unevenly (pidgin layout)
 myLayouts = onWorkspace "12" imLayout $ layoutHook gnomeConfig
   where
