@@ -32,7 +32,7 @@ sudo apt-get -y install xmonad gnome-session-flashback gnome-do
 sudo apt-get -y install blender inkscape mypaint
 
 # Other installation
-sudo apt-get -y install python-pip python-virtualenv
+sudo apt-get -y install python-pip python-virtualenv zfs
 
 # Fonts
 sudo apt-get -y install fonts-inconsolata
