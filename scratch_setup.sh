@@ -50,6 +50,11 @@ if [ ! -d ~/.emacs.d/clojure-mode ]; then
     git clone https://github.com/clojure-emacs/clojure-mode.git
     popd
 fi
+if [ ! -d ~/.emacs.d/rust-mode ]; then
+    pushd ~/.emacs.d
+    git clone https://github.com/rust-lang/rust-mode
+    popd
+fi
 
 # Make sure oh-my-zsh is present
 if [ ! -d ~/.oh-my-zsh ]
