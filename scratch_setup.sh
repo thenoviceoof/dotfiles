@@ -39,6 +39,7 @@ sudo apt-get -y install fonts-inconsolata
 
 # Emacs modes
 sudo apt-get -y install haskell-mode
+sudo apt-get -y install ess  # R
 mkdir -p ~/.emacs.d/
 if [ ! -d ~/.emacs.d/coffee-mode ]; then
     pushd ~/.emacs.d
