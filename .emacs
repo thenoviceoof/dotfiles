@@ -225,6 +225,13 @@
 (setq org-agenda-tags-column 75)
 ; Use F9 for C-c a
 (global-set-key (kbd "<f9>") 'org-agenda)
+; Remove "Clocking gap" messages
+(setq org-agenda-clock-consistency-checks
+      (quote (:max-duration "24:00"
+              :min-duration 0
+              :max-gap "168:00"  ; A week; longer gaps get marked
+              :gap-ok-around ("4:00"))))  ; Middle of the night, to
+                                          ; suppress warnings.
 ; Set up MobileOrg
 (setq org-mobile-directory "/orgmode@raspberrypi.local:/data/current/org")
 (setq org-mobile-inbox-for-pull "/home/thenoviceoof/org/input.org")
