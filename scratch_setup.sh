@@ -37,6 +37,20 @@ sudo apt-get -y install python-pip python-virtualenv
 # Fonts
 sudo apt-get -y install fonts-inconsolata
 
+# Emacs modes
+sudo apt-get -y install haskell-mode
+mkdir -p ~/.emacs.d/
+if [ ! -d ~/.emacs.d/coffee-mode ]; then
+    pushd ~/.emacs.d
+    git clone https://github.com/defunkt/coffee-mode.git
+    popd
+fi
+if [ ! -d ~/.emacs.d/clojure-mode ]; then
+    pushd ~/.emacs.d
+    git clone https://github.com/clojure-emacs/clojure-mode.git
+    popd
+fi
+
 # Make sure oh-my-zsh is present
 if [ ! -d ~/.oh-my-zsh ]
 then
