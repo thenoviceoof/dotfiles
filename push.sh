@@ -6,6 +6,9 @@ then
 fi
 cp .emacs ~/
 
+################################################################################
+# zsh
+
 # This assumes that oh-my-zsh has been installed
 cp frisky.zsh-theme ~/.oh-my-zsh/themes/
 cp .oh-my-zsh/* ~/.oh-my-zsh/custom/
@@ -15,6 +18,9 @@ then
     mv ~/.zshrc ~/.zshrc_bak
 fi
 cp .zshrc ~/
+
+################################################################################
+# local binaries
 
 mkdir -p ~/.local/bin
 
@@ -35,6 +41,9 @@ if [ ! -e ~/.local/bin/genpass ]
 then
     ln -s ~/.local/bin/genpass.py ~/.local/bin/genpass
 fi
+
+################################################################################
+# Other
 
 mkdir -p ~/.xmonad
 cp .xmonad/xmonad.hs ~/.xmonad/xmonad.hs
