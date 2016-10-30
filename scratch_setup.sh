@@ -59,6 +59,9 @@ then
     zsh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 fi
 
+# pip stuff
+pip install --user proselint
+
 # Personal stuff
 pip install --user pyli
 
