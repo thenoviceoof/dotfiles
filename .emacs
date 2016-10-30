@@ -623,7 +623,7 @@ string, or substring it."
             )
           )
 
-; Check if we have open clocks before closing.
+; Check if we have open clocks before closing the editor.
 (add-hook 'kill-emacs-query-functions
           (lambda ()
             (let ((close-editor t))
