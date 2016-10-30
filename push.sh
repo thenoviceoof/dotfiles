@@ -6,7 +6,9 @@ then
 fi
 cp .emacs ~/
 
+# This assumes that oh-my-zsh has been installed
 cp frisky.zsh-theme ~/.oh-my-zsh/themes/
+cp .oh-my-zsh/* ~/.oh-my-zsh/custom/
 
 if [ -e ~/.zshrc ]
 then
