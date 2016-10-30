@@ -189,6 +189,11 @@
  (add-to-list 'load-path "~/.emacs.d/rust-mode")
  (require 'rust-mode))
 
+;; haskell mode
+; installed via apt-get haskell-mode
+; this just turns on indentation
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+
 ;;##############################################################################
 ; org-mode
 
