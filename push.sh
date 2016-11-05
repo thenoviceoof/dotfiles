@@ -72,4 +72,10 @@ then
     ln -s ~/Android/Sdk/platform-tools/adb ~/.local/bin/adb
 fi
 
+# Intellij (flutter dev)
+if [ -d ~/.local/tools/intellij-idea -a ! -e ~/.local/bin/intellij ]
+then
+    ln -s ~/.local/tools/intellij-idea/bin/idea.sh ~/.local/bin/intellij
+fi
+
 # TODO: add go_appengine command line tool
