@@ -56,3 +56,20 @@ cp .xmonad/xmonad.hs ~/.xmonad/xmonad.hs
 
 cp .gitignore_global ~/
 git config --global core.excludesfile ~/.gitignore_global
+
+################################################################################
+# Link in external tools if they're available
+
+# Android studio
+if [ -d ~/Android/android-studio/bin -a ! -e ~/.local/bin/android-studio ]
+then
+    ln -s ~/Android/android-studio/bin/studio.sh ~/.local/bin/android-studio
+fi
+
+# adb at the default SDK location
+if [ -d ~/Android/Sdk/platform-tools -a ! -e ~/.local/bin/adb ]
+then
+    ln -s ~/Android/Sdk/platform-tools/adb ~/.local/bin/adb
+fi
+
+# TODO: add go_appengine command line tool
