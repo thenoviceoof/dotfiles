@@ -72,6 +72,12 @@ then
     ln -s ~/Android/Sdk/platform-tools/adb ~/.local/bin/adb
 fi
 
+# flutter CLI
+if [ -d ~/.local/tools/flutter -a ! -e ~/.local/bin/flutter ]
+then
+    ln -s ~/.local/tools/flutter/bin/flutter ~/.local/bin/flutter
+fi
+
 # Intellij (flutter dev)
 if [ -d ~/.local/tools/intellij-idea -a ! -e ~/.local/bin/intellij ]
 then
