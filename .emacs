@@ -143,9 +143,7 @@
 )
 
 ;; go mode
-; installed with golang-mode (ubuntu packages)
 (toss
- ; usual ubuntu golang install path
  (add-hook 'before-save-hook #'gofmt-before-save))
 
 ;; jade mode
