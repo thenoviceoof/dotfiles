@@ -37,26 +37,6 @@ sudo apt-get -y install python-pip python-virtualenv zfs
 # Fonts
 sudo apt-get -y install fonts-inconsolata
 
-# Emacs modes
-sudo apt-get -y install haskell-mode
-sudo apt-get -y install ess  # R
-mkdir -p ~/.emacs.d/
-if [ ! -d ~/.emacs.d/coffee-mode ]; then
-    pushd ~/.emacs.d
-    git clone https://github.com/defunkt/coffee-mode.git
-    popd
-fi
-if [ ! -d ~/.emacs.d/clojure-mode ]; then
-    pushd ~/.emacs.d
-    git clone https://github.com/clojure-emacs/clojure-mode.git
-    popd
-fi
-if [ ! -d ~/.emacs.d/rust-mode ]; then
-    pushd ~/.emacs.d
-    git clone https://github.com/rust-lang/rust-mode
-    popd
-fi
-
 # Make sure oh-my-zsh is present
 if [ ! -d ~/.oh-my-zsh ]
 then
@@ -94,6 +74,12 @@ echo "========================================"
 echo "Installing configuration files"
 cd ~/git/dotfiles
 ./push.sh
+
+################################################################################
+# Installations post-config
+
+# Install emacs modes
+emacs --script emacs_install.el
 
 ################################################################################
 # Other 1st-run configuration

@@ -7,6 +7,12 @@
        (progn ,@body)
      ('error)))
 
+; Set up the package manager on Emacs 24
+(require 'package)
+(add-to-list 'package-archives
+             '("MELPA Stable" . "http://stable.melpa.org/packages/"))
+(package-initialize)
+
 ;;######################################################################
 ;; defaults
 
@@ -114,10 +120,7 @@
  (require 'scala-mode-auto))
 
 ;; coffee mode
-; https://github.com/defunkt/coffee-mode
 (toss
- (add-to-list 'load-path "~/.emacs.d/coffee-mode")
- (require 'coffee-mode)
  (add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
  (add-to-list 'auto-mode-alist '("\\.iced$" . coffee-mode))
  (add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode)))
@@ -153,10 +156,6 @@
  (add-hook 'find-file-hook 'flymake-find-file-hook)
 )
 
-(toss
- (add-to-list 'load-path "~/.emacs.d/")
- (require 'clojure-mode))
-
 ;; go mode
 ; installed with golang-mode (ubuntu packages)
 ;; (toss
@@ -183,16 +182,10 @@
 (toss
  (require 'lilypond-mode))
 
-;; rust mode
-; https://github.com/rust-lang/rust-mode
-(toss
- (add-to-list 'load-path "~/.emacs.d/rust-mode")
- (require 'rust-mode))
-
 ;; haskell mode
-; installed via apt-get haskell-mode
 ; this just turns on indentation
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+(toss
+ (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation))
 
 ;;##############################################################################
 ; org-mode
