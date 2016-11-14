@@ -98,12 +98,6 @@
 ;;######################################################################
 ;; language specific extensions
 
-;; mumamo, for html+js
-; http://ourcomments.org/Emacs/nXhtml/doc/nxhtml.html+js
-(toss
-  (load "~/.emacs.d/nxhtml/autostart.el")
-  (setq mumamo-background-colors nil))
-
 ; open .zsh with shell-script mode
 (setq auto-mode-alist (cons '("\\.zsh$" . shell-script-mode) auto-mode-alist))
 
