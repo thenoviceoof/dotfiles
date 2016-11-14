@@ -24,3 +24,9 @@
 
 (package-install 'rust-mode)
 
+(package-install 'go-mode)
+
+(package-install 'less-css-mode)
+
+(package-install 'scala-mode)
+

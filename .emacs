@@ -113,12 +113,6 @@
 ; open .jsx with javascript mode
 (setq auto-mode-alist (cons '("\\.jsx$" . javascript-mode) auto-mode-alist))
 
-; scala mode
-(toss
- (add-to-list 'load-path "~/.emacs.d/scala-mode/")
- (require 'scala-mode)
- (require 'scala-mode-auto))
-
 ;; coffee mode
 (toss
  (add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
@@ -158,11 +152,9 @@
 
 ;; go mode
 ; installed with golang-mode (ubuntu packages)
-;; (toss
-;;  ; usual ubuntu golang install path
-;;  (setq load-path (cons "/usr/lib/go/misc/emacs" load-path))
-;;  (require 'go-mode-load)
-;;  (add-hook 'before-save-hook #'gofmt-before-save))
+(toss
+ ; usual ubuntu golang install path
+ (add-hook 'before-save-hook #'gofmt-before-save))
 
 ;; jade mode
 ; https://github.com/brianc/jade-mode
@@ -170,12 +162,6 @@
  (add-to-list 'load-path "~/.emacs.d/jade-mode")
  (require 'jade-mode)
  (add-to-list 'auto-mode-alist '("\\.jade$" . jade-mode)))
-
-;; less mode
-; https://github.com/purcell/less-css-mode/
-(toss
-  (require 'less-css-mode)
-  (add-to-list 'auto-mode-alist '("\\.less$" . less-css-mode)))
 
 ;; lilypond mode
 ; part of ubuntu's lilypond package
