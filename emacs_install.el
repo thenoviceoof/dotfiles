@@ -31,3 +31,5 @@
 (package-install 'scala-mode)
 
 (package-install 'web-mode)
+
+(package-install 'dart-mode)
