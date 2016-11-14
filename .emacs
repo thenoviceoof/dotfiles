@@ -101,10 +101,8 @@
 ; open .zsh with shell-script mode
 (setq auto-mode-alist (cons '("\\.zsh$" . shell-script-mode) auto-mode-alist))
 
-; open .json with javascript mode
+; open .json/.jsx with javascript mode
 (setq auto-mode-alist (cons '("\\.json$" . javascript-mode) auto-mode-alist))
-
-; open .jsx with javascript mode
 (setq auto-mode-alist (cons '("\\.jsx$" . javascript-mode) auto-mode-alist))
 
 ;; coffee mode
