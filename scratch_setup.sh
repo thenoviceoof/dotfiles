@@ -153,7 +153,6 @@ echo "========================================"
 echo "REMINDERS!"
 echo "===================="
 
-echo "REMEMBER: change gnome-do preferences to launch on startup"
 echo "REMEMBER: update Github with new keys"
 echo "REMEMBER: update git/dotfiles to read/write config"
 echo "REMEMBER: change chromium-browser to use classical theming"
