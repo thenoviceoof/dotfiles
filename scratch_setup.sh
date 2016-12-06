@@ -37,6 +37,9 @@ sudo apt-get -y install python-pip python-virtualenv zfs
 # Fonts
 sudo apt-get -y install fonts-inconsolata
 
+# Themes
+sudo apt-get -y install gnome-themes-standard
+
 # Make sure oh-my-zsh is present
 if [ ! -d ~/.oh-my-zsh ]
 then
@@ -104,6 +107,15 @@ fi
 git config --global user.email "thenoviceoof@gmail.com"
 git config --global user.name "thenoviceoof"
 
+# Set up a more palatable GTK 2.0 theme
+if [ ! -e ~/.gtkrc-2.0 ]
+then
+    cat <<EOF >~/.gtkrc-2.0
+gtk-icon-theme-name = "Adwaita"
+gtk-theme-name = "Adwaita"
+EOF
+fi
+
 # DEPRECATED
 
 # gnome-terminal: default to more rows
@@ -144,3 +156,4 @@ echo "===================="
 echo "REMEMBER: change gnome-do preferences to launch on startup"
 echo "REMEMBER: update Github with new keys"
 echo "REMEMBER: update git/dotfiles to read/write config"
+echo "REMEMBER: change chromium-browser to "
