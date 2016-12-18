@@ -49,6 +49,7 @@ then
     echo "========================================"
     echo "Installing oh-my-zsh"
     zsh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+    # TODO: find a way to quit oh-my-zsh automatically
 fi
 
 # pip stuff
