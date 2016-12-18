@@ -22,7 +22,7 @@ echo "========================================"
 echo "Installing from apt-get"
 
 # General tools
-sudo apt-get -y install emacs vim git-core keepass2 chromium-browser
+sudo apt-get -y install emacs vim git-core keepass2 chromium-browser zsh
 
 # Glue tools
 # DEPRECATED: gnome-session/gnome-do
@@ -39,6 +39,9 @@ sudo apt-get -y install fonts-inconsolata
 
 # Themes
 sudo apt-get -y install gnome-themes-standard
+
+# Set my login shell to zsh
+sudo chsh -s /bin/zsh
 
 # Make sure oh-my-zsh is present
 if [ ! -d ~/.oh-my-zsh ]
