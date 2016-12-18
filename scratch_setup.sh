@@ -98,14 +98,17 @@ echo "Running other configuration"
 # default keyboard: replace caps lock with ctrl
 #     This only works with the login shell, so we also need to add it
 #     to the profile
-cat /etc/default/keyboard | sed s/XKBOPTIONS=\"\"/XKBOPTIONS=\"ctrl:nocaps\"/ >/tmp/keyboard_configuration
+cat /etc/default/keyboard | \
+    sed s/XKBOPTIONS=\"\"/XKBOPTIONS=\"ctrl:nocaps\"/ \
+    >/tmp/keyboard_configuration
 sudo mv /tmp/keyboard_configuration /etc/default/keyboard
 
-# profile: replace caps lock with ctrl on login
-EXISTING_CTRL_KEYMAP=`grep "setxkbmap -option \"ctrl:nocaps\"" ~/.profile`
+# profile: replace caps lock with ctrl on login, turn on X server kill keys
+KEYMAP_OPTIONS="ctrl:nocaps,terminate:ctrl_alt_bksp"
+EXISTING_CTRL_KEYMAP=`grep "setxkbmap -option \"$KEYMAP_OPTIONS\"" ~/.profile`
 if [ -z "$EXISTING_CTRL_KEYMAP" ]
 then
-    printf "\nsetxkbmap -option \"ctrl:nocaps\"\n" >>~/.profile
+    printf "\nsetxkbmap -option \"$KEYMAP_OPTIONS\"\n" >>~/.profile
 fi
 
 # git
