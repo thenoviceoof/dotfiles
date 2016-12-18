@@ -1,7 +1,6 @@
 import XMonad
 import XMonad.Hooks.ManageDocks
 import XMonad.Util.EZConfig
-import XMonad.Config.Gnome
 
 import XMonad.Actions.FindEmptyWorkspace
 
@@ -24,7 +23,6 @@ altMask = mod1Mask
 -- TODO: clean this up
 myManageHook = composeAll
                [ className =? "Do" --> doFloat
-               , className =? "Pidgin" --> doShift "12"
                  -- trying out fullscreen flash
                , isFullscreen --> doFullFloat
                , manageDocks
@@ -53,17 +51,11 @@ myKeys = [ -- M-m shows the next empty workspace
             spawn "gnome-screensaver-command --lock")
          ]
 
--- By default, split the last desktop unevenly (pidgin layout)
-myLayouts = onWorkspace "12" imLayout $ layoutHook gnomeConfig
-  where
-    imLayout = Tall 1 (3/100) (3/4)
-    -- imLayout = FixedColumn 1 20 120 10
-
-main = xmonad $ gnomeConfig
+main = xmonad $ defaultConfig
         { terminal = "gnome-terminal --hide-menubar"
         , modMask = modkey
-        , manageHook = myManageHook <+> manageHook gnomeConfig
+        , manageHook = myManageHook <+> manageHook defaultConfig
         , workspaces = myWorkspaces
-        , layoutHook = smartBorders $ myLayouts
+        , layoutHook = smartBorders $ layoutHook defaultConfig
         , logHook = takeTopFocus
         } `additionalKeys` myKeys
