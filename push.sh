@@ -54,6 +54,8 @@ fi
 mkdir -p ~/.xmonad
 cp .xmonad/xmonad.hs ~/.xmonad/xmonad.hs
 
+cp .xmobarrc ~/.xmobarrc
+
 cp .gitignore_global ~/
 git config --global core.excludesfile ~/.gitignore_global
 

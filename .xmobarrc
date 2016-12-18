@@ -1,0 +1,15 @@
+Config { font = "xft:inconsolata:size=11:antialias=true"
+       , borderColor = "black"
+       , border = TopB
+       , bgColor = "black"
+       , fgColor = "grey"
+       , position = TopW L 85
+       , commands = [ Run Date "%Y-%m-%d %a %H:%M  Wk %V" "date" 10
+                    , Run Battery [] 30
+                    , Run Memory [] 10
+                    , Run StdinReader
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{" 
+       , template = "%date%          %memory%          %battery%          %StdinReader%"
+       }
