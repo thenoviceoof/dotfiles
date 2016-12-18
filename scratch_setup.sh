@@ -23,6 +23,7 @@ echo "Installing from apt-get"
 
 # General tools
 sudo apt-get -y install emacs vim git-core keepass2 chromium-browser zsh
+sudo apt-get -y install aptitude xautolock
 
 # Glue tools
 # DEPRECATED: gnome-session/gnome-do

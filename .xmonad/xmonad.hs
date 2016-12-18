@@ -49,7 +49,16 @@ myKeys = [ -- M-m shows the next empty workspace
            -- Ctrl-Alt-l locks the screen
          , ((controlMask .|. altMask, xK_l),
             spawn "gnome-screensaver-command --lock")
+           -- Override the default XMonad restart command
+         , ((modkey, xK_q),
+            spawn "killall xautolock; xmonad --recompile && xmonad --restart")
          ]
+
+-- Set up startupHook
+myStartupHook :: X()
+myStartupHook = do
+  -- Lock the screen after being idle.
+  spawn "xautolock -time 5 -locker 'gnome-screensaver-command --lock'"
 
 main = xmonad $ defaultConfig
         { terminal = "gnome-terminal --hide-menubar"
@@ -58,4 +67,5 @@ main = xmonad $ defaultConfig
         , workspaces = myWorkspaces
         , layoutHook = smartBorders $ layoutHook defaultConfig
         , logHook = takeTopFocus
+        , startupHook = myStartupHook
         } `additionalKeys` myKeys
