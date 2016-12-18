@@ -120,6 +120,16 @@ gtk-theme-name = "Adwaita"
 EOF
 fi
 
+# Set up xterm
+if [ ! -e ~/.Xresources ]
+then
+    cat <<EOF >~/.Xresources
+XTerm*faceName: Inconsolata
+XTerm*faceSize: 10
+EOF
+    xrdb -merge ~/.Xresources
+fi
+
 # DEPRECATED
 
 # gnome-terminal: default to more rows
