@@ -29,6 +29,9 @@
  ; whitespace highlighting
  '(whitespace-line ((((class color)) (:background "black"))))
  '(whitespace-tab ((((class color)) (:foreground "#505050"))))
+
+ ; hl-mode
+ '(hl-line ((((class color)) (:background "slate gray"))))
 )
 
 ; try to set the default fonts
