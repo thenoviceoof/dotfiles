@@ -23,12 +23,12 @@ echo "Installing from apt-get"
 
 # General tools
 sudo apt-get -y install emacs vim git-core keepass2 chromium-browser \
-     zsh aptitude xautolock
+     zsh aptitude vlc
 
 # Glue tools
 # DEPRECATED: gnome-session/gnome-do
 sudo apt-get -y install xmonad gnome-session-flashback gnome-do \
-     xmobar trayer volti
+     xmobar trayer volti xautolock
 
 # Graphics
 sudo apt-get -y install blender inkscape mypaint
