@@ -86,4 +86,8 @@ then
     ln -s ~/.local/tools/intellij-idea/bin/idea.sh ~/.local/bin/intellij
 fi
 
-# TODO: add go_appengine command line tool
+# App engine/Google Cloud SDK tooling
+if [ -d ~/.local/tools/google-cloud-sdk -a ! -e ~/.local/bin/gcloud ]
+then
+    ln -s ~/.local/tools/google-cloud-sdk/bin/gcloud ~/.local/bin/gcloud
+fi
