@@ -13,6 +13,33 @@ blacklist i2c-designware-platform
 EOF"
 fi
 
+# Setup the synaptics xorg conf, for turning on palm rejection
+if [ ! -d /etc/X11/xorg.conf.d ]
+then
+    sudo mkdir /etc/X11/xorg.conf.d
+fi
+if [ ! -e /etc/X11/xorg.conf.d/50-synaptics.conf ]
+then
+    sudo cp /usr/share/X11/xorg.conf.d/50-synaptics.conf \
+         /etc/X11/xorg.conf.d/50-synaptics.conf
+    EXISTING_CONFIG=`grep "# Custom option" /etc/X11/xorg.conf.d/50-synaptics.conf`
+    if [ -z "$EXISTING_CONFIG" ]
+    then
+        sudo bash -c 'cat <<EOF >>/etc/X11/xorg.conf.d/50-synaptics.conf
+
+# Custom option
+# Turn on palm rejection
+Section "InputClass"
+    Identifier "Palm Rejection"
+    Driver "synaptics"
+    MatchIsTouchpad "on"
+    Option "PalmDetect" "1"
+    Option "PalmMinWidth" "10"
+EndSection
+EOF'
+    fi
+fi
+
 # Multiplex the dedicated/integrated graphics.
 # Get the (current) newest driver for the right card support.
 # TODO: get bumblebee working without a ton of hacks
