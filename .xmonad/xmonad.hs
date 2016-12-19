@@ -53,7 +53,7 @@ myKeys = [ -- M-m shows the next empty workspace
             spawn "gnome-screensaver-command --lock")
            -- Override the default XMonad restart command
          , ((modkey, xK_q),
-            spawn "killall xautolock nm-applet trayer; xmonad --recompile && xmonad --restart")
+            spawn "killall xautolock nm-applet volti ibus-daemon trayer; xmonad --recompile && xmonad --restart")
          ]
 
 -- Set up startupHook
@@ -63,6 +63,10 @@ myStartupHook = do
   spawn "xautolock -time 5 -locker 'gnome-screensaver-command --lock'"
   -- Start up the network manager
   spawn "nm-applet"
+  -- Start volume control
+  spawn "volti"
+  -- Start keyboard layout control
+  spawn "ibus-daemon"
   -- Start up the trayer
   spawn "trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 15 --transparent true --alpha 0 --tint 0x000000 --height 20"
 

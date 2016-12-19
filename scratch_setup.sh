@@ -28,7 +28,7 @@ sudo apt-get -y install emacs vim git-core keepass2 chromium-browser \
 # Glue tools
 # DEPRECATED: gnome-session/gnome-do
 sudo apt-get -y install xmonad gnome-session-flashback gnome-do \
-     xmobar trayer
+     xmobar trayer volti
 
 # Graphics
 sudo apt-get -y install blender inkscape mypaint
