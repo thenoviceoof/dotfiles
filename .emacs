@@ -38,6 +38,7 @@
 (require 'whitespace)
 (setq whitespace-style '(face empty tabs tab-mark lines-tail))
 (global-whitespace-mode t)
+(setq whitespace-global-modes '(not org-mode))
 
 ; for c mode, tab in 8 spaces
 (setq-default 
@@ -195,8 +196,8 @@
         ("SL5Y" . "magenta"))
       )
 ; Use the full width of a standard buffer on bitera.
-(setq org-tags-column -80)
-(setq org-agenda-tags-column 75)
+(setq org-tags-column -105)
+(setq org-agenda-tags-column 100)
 ; Use F9 for C-c a
 (global-set-key (kbd "<f9>") 'org-agenda)
 ; Remove "Clocking gap" messages
