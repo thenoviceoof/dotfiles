@@ -91,3 +91,7 @@ if [ -d ~/.local/tools/google-cloud-sdk -a ! -e ~/.local/bin/gcloud ]
 then
     ln -s ~/.local/tools/google-cloud-sdk/bin/gcloud ~/.local/bin/gcloud
 fi
+if [ -d ~/.local/tools/google-cloud-sdk -a ! -e ~/.local/bin/gcloud_dev_appserver ]
+then
+    ln -s ~/.local/tools/google-cloud-sdk/bin/dev_appserver.py ~/.local/bin/gcloud_dev_appserver
+fi
