@@ -34,7 +34,11 @@ Section "InputClass"
     Driver "synaptics"
     MatchIsTouchpad "on"
     Option "PalmDetect" "1"
-    Option "PalmMinWidth" "10"
+    Option "PalmMinWidth" "5"
+    Option "PalmMinZ" "20"
+    Option "PressureMotionMinZ" "50"
+    Option "FingerLow" "40"
+    Option "FingerHigh" "55"
 EndSection
 EOF'
     fi
