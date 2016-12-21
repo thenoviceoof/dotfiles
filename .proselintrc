@@ -1,0 +1,7 @@
+{
+        "checks": {
+                "typography.symbols": false,
+                "misc.but": false,
+                "cursing.filth": false
+        }
+}

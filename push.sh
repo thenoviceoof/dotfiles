@@ -59,6 +59,8 @@ cp .xmobarrc ~/.xmobarrc
 cp .gitignore_global ~/
 git config --global core.excludesfile ~/.gitignore_global
 
+cp .proselintrc ~/.proselintrc
+
 ################################################################################
 # Link in external tools if they're available
 
