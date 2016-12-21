@@ -36,6 +36,10 @@ sudo apt-get -y install blender inkscape mypaint
 # Other installation
 sudo apt-get -y install python-pip python-virtualenv zfs
 
+# Writing tools
+sudo apt-get -y install markdown
+pip install --user proselint
+
 # Fonts
 sudo apt-get -y install fonts-inconsolata
 
@@ -53,9 +57,6 @@ then
     zsh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
     # TODO: find a way to quit oh-my-zsh automatically
 fi
-
-# pip stuff
-pip install --user proselint
 
 # Personal stuff
 pip install --user pyli
