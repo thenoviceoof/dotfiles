@@ -44,6 +44,14 @@ EOF'
     fi
 fi
 
+# Start the syndaemon on login.
+SYNDAEMON_COMMAND="syndaemon -i 1 -d -t -k"
+EXISTING_SYNDAEMON=`grep "$SYNDAEMON_COMMAND" ~/.profile`
+if [ -z "$EXISTING_SYNDAEMON" ]
+then
+    printf "\n$SYNDAEMON_COMMAND\n" >>~/.profile
+fi
+
 # Multiplex the dedicated/integrated graphics.
 # Get the (current) newest driver for the right card support.
 # TODO: get bumblebee working without a ton of hacks
