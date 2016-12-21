@@ -57,7 +57,20 @@ for file in $(ls | grep -v html | grep -v \.sh); do
     # Generate markdown.
     echo "---------- Generating markdown..."
     mdfile="$file.html"
-    cat $tmpfile | markdown >$mdfile
+    cat <<EOF >$mdfile
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+EOF
+    cat $tmpfile | markdown >>$mdfile
+    cat <<EOF >>$mdfile
+</body>
+</html>
+EOF
     echo ""
 
     # Clean up.
