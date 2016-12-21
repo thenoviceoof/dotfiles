@@ -42,7 +42,7 @@ for file in $(ls | grep -v html | grep -v \.sh); do
 
     # Do lexical illusion detection myself
     echo "---------- Lexical illusions (repeated)"
-    grep -Pzo '^.*\s(\w+)\n\1\s.*$' $tmpfile
+    grep -Pzo '\n.*\s(\w+)\n\1\s.*\n' $tmpfile
     echo ""
 
     ############################################################
