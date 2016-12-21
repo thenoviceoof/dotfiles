@@ -46,6 +46,14 @@ for file in $(ls | grep -v html | grep -v \.sh); do
     echo ""
 
     ############################################################
+    # Massage input
+
+    # Replace ... with a proper ellipsis
+    workingfile=$(mktemp)
+    cat $tmpfile | sed 's/\.\.\./…/' >$workingfile
+    mv $workingfile $tmpfile
+
+    ############################################################
     # Generate markdown.
     echo "---------- Generating markdown..."
     mdfile="$file.html"
