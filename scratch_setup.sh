@@ -33,8 +33,8 @@ sudo apt-get -y install xmonad gnome-session-flashback gnome-do \
 # Graphics
 sudo apt-get -y install blender inkscape mypaint
 
-# Other installation
-sudo apt-get -y install python-pip python-virtualenv zfs
+# Dev tools
+sudo apt-get -y install python-pip python-virtualenv zfs nmap
 
 # Writing tools
 sudo apt-get -y install markdown
