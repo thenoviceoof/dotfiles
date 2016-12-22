@@ -17,6 +17,8 @@ import qualified XMonad.StackSet as W
 import XMonad.Prompt
 import XMonad.Prompt.Shell
 
+import XMonad.Util.Paste
+
 import System.IO
 
 
@@ -54,6 +56,12 @@ myKeys = [ -- M-m shows the next empty workspace
            -- Override the default XMonad restart command
          , ((modkey, xK_q),
             spawn "killall xautolock nm-applet volti ibus-daemon trayer; xmonad --recompile && xmonad --restart")
+           -- Get a sane tab-switching keybinding (mostly for bujano).
+         , ((modkey .|. controlMask, xK_Down), sendKey controlMask xK_Page_Down)
+         , ((modkey .|. controlMask, xK_Up), sendKey controlMask xK_Page_Up)
+           -- Get a sane home/end keybinding.
+         , ((modkey, xK_Left), sendKey noModMask xK_Home)
+         , ((modkey, xK_Right), sendKey noModMask xK_End)
          ]
 
 -- Set up startupHook
