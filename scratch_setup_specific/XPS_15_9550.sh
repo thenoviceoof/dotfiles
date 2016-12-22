@@ -37,8 +37,8 @@ Section "InputClass"
     Option "PalmMinWidth" "5"
     Option "PalmMinZ" "20"
     Option "PressureMotionMinZ" "50"
-    Option "FingerLow" "40"
-    Option "FingerHigh" "55"
+    Option "FingerLow" "35"
+    Option "FingerHigh" "50"
 EndSection
 EOF'
     fi
