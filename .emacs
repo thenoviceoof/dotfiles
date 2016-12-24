@@ -198,7 +198,7 @@
         ("SL1Y" . "magenta")
         ("SL5Y" . "magenta"))
       )
-; Use the full width of a standard buffer on bitera.
+; Use the full width of a standard buffer on 1920p (bujano).
 (setq org-tags-column -105)
 (setq org-agenda-tags-column 100)
 ; Use F9 for C-c a
