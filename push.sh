@@ -61,6 +61,9 @@ git config --global core.excludesfile ~/.gitignore_global
 
 cp .proselintrc ~/.proselintrc
 
+mkdir -p ~/.config
+cp redshift.conf ~/.config/
+
 ################################################################################
 # Link in external tools if they're available
 

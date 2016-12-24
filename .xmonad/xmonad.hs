@@ -55,7 +55,7 @@ myKeys = [ -- M-m shows the next empty workspace
             spawn "gnome-screensaver-command --lock")
            -- Override the default XMonad restart command
          , ((modkey, xK_q),
-            spawn "killall xautolock nm-applet volti ibus-daemon trayer; xmonad --recompile && xmonad --restart")
+            spawn "killall xautolock nm-applet volti ibus-daemon trayer redshift-gtk; xmonad --recompile && xmonad --restart")
            -- Get a sane tab-switching keybinding (mostly for bujano).
          , ((modkey .|. controlMask, xK_Down), sendKey controlMask xK_Page_Down)
          , ((modkey .|. controlMask, xK_Up), sendKey controlMask xK_Page_Up)
@@ -77,6 +77,8 @@ myStartupHook = do
   spawn "ibus-daemon"
   -- Start up the trayer
   spawn "trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 15 --transparent true --alpha 0 --tint 0x000000 --height 20"
+  -- Start up redshift-gtk
+  spawn "redshift-gtk"
 
 main = do
   xmproc <- spawnPipe "xmobar"
