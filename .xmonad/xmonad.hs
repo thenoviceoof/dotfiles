@@ -58,7 +58,7 @@ myKeys = [ -- M-m shows the next empty workspace
             spawn "gnome-screensaver-command --lock")
            -- Override the default XMonad restart command
          , ((modkey, xK_q),
-            spawn "killall xautolock nm-applet volti ibus-daemon trayer redshift-gtk; xmonad --recompile && xmonad --restart")
+            spawn "killall xautolock nm-applet volti ibus-daemon trayer redshift redshift-gtk; xmonad --recompile && xmonad --restart")
            -- Define volume keys.
          , ((noModMask, xF86XK_AudioLowerVolume), spawn "amixer set Master 4-")
          , ((noModMask, xF86XK_AudioRaiseVolume), spawn "amixer set Master 4+")
