@@ -19,6 +19,9 @@ import XMonad.Prompt.Shell
 
 import XMonad.Util.Paste
 
+-- Used for volume key definitions.
+import Graphics.X11.ExtraTypes.XF86
+
 import System.IO
 
 
@@ -56,6 +59,12 @@ myKeys = [ -- M-m shows the next empty workspace
            -- Override the default XMonad restart command
          , ((modkey, xK_q),
             spawn "killall xautolock nm-applet volti ibus-daemon trayer redshift-gtk; xmonad --recompile && xmonad --restart")
+           -- Define volume keys.
+         , ((noModMask, xF86XK_AudioLowerVolume), spawn "amixer set Master 4-")
+         , ((noModMask, xF86XK_AudioRaiseVolume), spawn "amixer set Master 4+")
+           -- Work around for mute working, but unmute leaving subcomponents muted.
+           -- https://bugs.launchpad.net/ubuntu/+source/alsa-utils/+bug/1313813
+         , ((noModMask, xF86XK_AudioMute), spawn "amixer -D pulse set Master toggle")
            -- Get a sane tab-switching keybinding (mostly for bujano).
          , ((modkey .|. controlMask, xK_Down), sendKey controlMask xK_Page_Down)
          , ((modkey .|. controlMask, xK_Up), sendKey controlMask xK_Page_Up)
