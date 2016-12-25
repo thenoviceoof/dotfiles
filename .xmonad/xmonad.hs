@@ -60,8 +60,8 @@ myKeys = [ -- M-m shows the next empty workspace
          , ((modkey, xK_q),
             spawn "killall xautolock nm-applet volti ibus-daemon trayer redshift redshift-gtk; xmonad --recompile && xmonad --restart")
            -- Define volume keys.
-         , ((noModMask, xF86XK_AudioLowerVolume), spawn "amixer set Master 4-")
-         , ((noModMask, xF86XK_AudioRaiseVolume), spawn "amixer set Master 4+")
+         , ((noModMask, xF86XK_AudioLowerVolume), spawn "amixer set Master 5-")
+         , ((noModMask, xF86XK_AudioRaiseVolume), spawn "amixer set Master 5+")
            -- Work around for mute working, but unmute leaving subcomponents muted.
            -- https://bugs.launchpad.net/ubuntu/+source/alsa-utils/+bug/1313813
          , ((noModMask, xF86XK_AudioMute), spawn "amixer -D pulse set Master toggle")
