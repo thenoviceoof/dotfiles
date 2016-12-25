@@ -31,7 +31,7 @@ sudo apt-get -y install xmonad gnome-session-flashback gnome-do \
      xmobar trayer volti xautolock
 
 # Graphics
-sudo apt-get -y install blender inkscape mypaint
+sudo apt-get -y install blender inkscape mypaint gimp
 
 # Dev tools
 sudo apt-get -y install python-pip python-virtualenv zfs nmap
