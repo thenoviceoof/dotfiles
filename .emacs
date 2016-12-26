@@ -398,7 +398,9 @@ string, or substring it."
 (setq org-timer-default-timer 25)
 (add-hook 'org-clock-in-hook
           (lambda ()
-            (if (not org-timer-current-timer)
+            (if (not org-timer-countdown-timer)
+                ; 16 is simply a magic value, for replacing the current timer.
+                ; Current as of 9.0, defined within the function itself.
                 (org-timer-set-timer '(16)))
             )
           )
