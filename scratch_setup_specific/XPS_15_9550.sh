@@ -45,7 +45,7 @@ EOF'
 fi
 
 # Start the syndaemon on login.
-SYNDAEMON_COMMAND="syndaemon -i 1 -d -t -k"
+SYNDAEMON_COMMAND="syndaemon -i 2 -d -t -k"
 EXISTING_SYNDAEMON=`grep "$SYNDAEMON_COMMAND" ~/.profile`
 if [ -z "$EXISTING_SYNDAEMON" ]
 then
