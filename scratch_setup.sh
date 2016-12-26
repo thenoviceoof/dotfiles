@@ -126,6 +126,14 @@ gtk-theme-name = "Adwaita"
 EOF
 fi
 
+# Set up ibus with the right options.
+dconf write /desktop/ibus/general/engines-order \
+      "['xkb:us:dvorak:eng', 'xkb:us::eng']"
+dconf write /desktop/ibus/general/preload-engines \
+      "['xkb:us:dvorak:eng', 'xkb:us::eng']"
+# Don't let the default ibus switch hotkey collide with xmonad.
+dconf write /desktop/ibus/general/hotkey/triggers "['<Control><Alt>space']"
+
 # Set up xterm
 if [ ! -e ~/.Xresources ]
 then
