@@ -33,3 +33,5 @@
 (package-install 'web-mode)
 
 (package-install 'dart-mode)
+
+(package-install 'yaml-mode)
