@@ -68,9 +68,6 @@ myKeys = [ -- M-m shows the next empty workspace
            -- Get a sane browser tab-switching keybinding (mostly for bujano).
          , ((modkey .|. altMask, xK_Right), sendKey controlMask xK_Page_Down)
          , ((modkey .|. altMask, xK_Left), sendKey controlMask xK_Page_Up)
-           -- Get a sane home/end keybinding.
-         , ((modkey, xK_Left), sendKey noModMask xK_Home)
-         , ((modkey, xK_Right), sendKey noModMask xK_End)
          ]
 
 -- Set up startupHook
