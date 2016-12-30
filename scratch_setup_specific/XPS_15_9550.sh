@@ -74,7 +74,7 @@ EOF
     EXISTING_REVERSE=`grep "$REVERSE_COMMAND" ~/.profile`
     if [ -z "$EXISTING_REVERSE" ]
     then
-        echo "\n$REVERSE_COMMAND" >>~/.profile
+        printf "\n$REVERSE_COMMAND\n" >>~/.profile
     fi
 fi
 
