@@ -52,6 +52,23 @@ then
     printf "\n$SYNDAEMON_COMMAND\n" >>~/.profile
 fi
 
+# Reverse the direction of the touchpad.
+if [ ! -e ~/.local/bin/.reverse-touchpad.sh ]
+then
+    cat <<EOF >~/.local/bin/.reverse-touchpad.sh
+# Set up touchpad reversal.
+TOUCHPAD_ID=\`xinput list | grep "Synaptics TouchPad" | sed 's/^.*id=\([[:digit:]]\+\).*$/\1/'\`
+xinput set-prop \$TOUCHPAD_ID 278 -111 -111
+EOF
+    chmod u+x ~/.local/bin/.reverse-touchpad.sh
+    REVERSE_COMMAND="~/.local/bin/.reverse-touchpad.sh"
+    EXISTING_REVERSE=`grep "$REVERSE_COMMAND" ~/.profile`
+    if [ -z "$EXISTING_REVERSE" ]
+    then
+        echo "\n$REVERSE_COMMAND" >>~/.profile
+    fi
+fi
+
 # Multiplex the dedicated/integrated graphics.
 # Get the (current) newest driver for the right card support.
 # TODO: get bumblebee working without a ton of hacks
