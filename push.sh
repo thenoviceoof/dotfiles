@@ -4,20 +4,20 @@ if [ -e ~/.emacs ]
 then
     mv ~/.emacs ~/.emacs_bak
 fi
-cp .emacs ~/
+cp emacs ~/.emacs
 
 ################################################################################
 # zsh
 
 # This assumes that oh-my-zsh has been installed
 cp frisky.zsh-theme ~/.oh-my-zsh/themes/
-cp .oh-my-zsh/* ~/.oh-my-zsh/custom/
+cp oh-my-zsh/* ~/.oh-my-zsh/custom/
 
 if [ -e ~/.zshrc ]
 then
     mv ~/.zshrc ~/.zshrc_bak
 fi
-cp .zshrc ~/
+cp zshrc ~/.zshrc
 
 ################################################################################
 # local binaries
@@ -52,14 +52,14 @@ fi
 # Other
 
 mkdir -p ~/.xmonad
-cp .xmonad/xmonad.hs ~/.xmonad/xmonad.hs
+cp xmonad.hs ~/.xmonad/xmonad.hs
 
-cp .xmobarrc ~/.xmobarrc
+cp xmobarrc ~/.xmobarrc
 
-cp .gitignore_global ~/
+cp gitignore_global ~/.gitignore_global
 git config --global core.excludesfile ~/.gitignore_global
 
-cp .proselintrc ~/.proselintrc
+cp proselintrc ~/.proselintrc
 
 mkdir -p ~/.config
 cp redshift.conf ~/.config/
