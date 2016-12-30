@@ -40,6 +40,15 @@ Section "InputClass"
     Option "FingerLow" "35"
     Option "FingerHigh" "50"
 EndSection
+
+# Turn on better coasting options.
+Section "InputClass"
+    Identifier "Touchpad Flings"
+    Driver "synaptics"
+    MatchIsTouchpad "on"
+    Option "CoastingSpeed" "80"
+    Option "CoastingFriction" "60"
+EndSection
 EOF'
     fi
 fi
@@ -58,7 +67,7 @@ then
     cat <<EOF >~/.local/bin/.reverse-touchpad.sh
 # Set up touchpad reversal.
 TOUCHPAD_ID=\`xinput list | grep "Synaptics TouchPad" | sed 's/^.*id=\([[:digit:]]\+\).*$/\1/'\`
-xinput set-prop \$TOUCHPAD_ID 278 -111 -111
+xinput set-prop \$TOUCHPAD_ID 278 -75 -75
 EOF
     chmod u+x ~/.local/bin/.reverse-touchpad.sh
     REVERSE_COMMAND="~/.local/bin/.reverse-touchpad.sh"
