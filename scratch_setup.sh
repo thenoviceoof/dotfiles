@@ -23,7 +23,7 @@ echo "Installing from apt-get"
 
 # General tools
 sudo apt-get -y install emacs vim git-core keepass2 chromium-browser \
-     zsh aptitude vlc redshift-gtk
+     zsh aptitude vlc redshift-gtk avahi-dnsconfd
 
 # Glue tools
 # DEPRECATED: gnome-session/gnome-do
