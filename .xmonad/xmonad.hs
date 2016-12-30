@@ -65,9 +65,9 @@ myKeys = [ -- M-m shows the next empty workspace
            -- Work around for mute working, but unmute leaving subcomponents muted.
            -- https://bugs.launchpad.net/ubuntu/+source/alsa-utils/+bug/1313813
          , ((noModMask, xF86XK_AudioMute), spawn "amixer -D pulse set Master toggle")
-           -- Get a sane tab-switching keybinding (mostly for bujano).
-         , ((modkey .|. controlMask, xK_Down), sendKey controlMask xK_Page_Down)
-         , ((modkey .|. controlMask, xK_Up), sendKey controlMask xK_Page_Up)
+           -- Get a sane browser tab-switching keybinding (mostly for bujano).
+         , ((modkey .|. altMask, xK_Right), sendKey controlMask xK_Page_Down)
+         , ((modkey .|. altMask, xK_Left), sendKey controlMask xK_Page_Up)
            -- Get a sane home/end keybinding.
          , ((modkey, xK_Left), sendKey noModMask xK_Home)
          , ((modkey, xK_Right), sendKey noModMask xK_End)
