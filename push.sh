@@ -4,7 +4,7 @@ if [ -e ~/.emacs ]
 then
     mv ~/.emacs ~/.emacs_bak
 fi
-cp emacs ~/.emacs
+cp emacs.el ~/.emacs
 
 ################################################################################
 # zsh
