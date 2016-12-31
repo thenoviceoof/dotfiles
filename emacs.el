@@ -519,7 +519,9 @@ string, or substring it."
 ; Agenda commands.
 (setq org-agenda-custom-commands
       '(; View active top level projects
-        ("h" tags-todo "+LEVEL=1+TODO={TODO\\|INPROGRESS}"
+        ("h" "Current Projects"
+         ((tags-todo "+LEVEL=1+TODO={EXT}")
+          (tags-todo "+LEVEL=1+TODO={TODO\\|INPROGRESS}"))
          ((org-agenda-sorting-strategy '(todo-state-up user-defined-up))
           (org-agenda-prefix-format "%(thenoviceoof/org-agenda-prefix 5)")))
         ; View all in progress tasks
