@@ -49,6 +49,11 @@ then
 fi
 
 ################################################################################
+# System-invoked binaries
+
+cp redshift-replace.sh ~/.local/bin/.redshift-replace.sh
+
+################################################################################
 # Other
 
 mkdir -p ~/.xmonad
@@ -62,7 +67,8 @@ git config --global core.excludesfile ~/.gitignore_global
 cp proselintrc ~/.proselintrc
 
 mkdir -p ~/.config
-cp redshift.conf ~/.config/
+cp redshift-day.conf ~/.config/redshift.conf
+cp redshift-night.conf ~/.config/redshift-night.conf
 
 ################################################################################
 # Link in external tools if they're available

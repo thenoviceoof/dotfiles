@@ -134,6 +134,16 @@ dconf write /desktop/ibus/general/preload-engines \
 # Don't let the default ibus switch hotkey collide with xmonad.
 dconf write /desktop/ibus/general/hotkey/triggers "['<Control><Alt>space']"
 
+# Set up redshift cron hack.
+EXISTING_REDSHIFT_CRON=`crontab -l | grep "REDSHIFTCRON"`
+if [ -z "$EXISTING_REDSHIFT_CRON" ]
+then
+    crontab -l 2>/dev/null | cat - <<EOF | crontab -
+# REDSHIFTCRON Turn on redshift near bedtime.
+0 23 * * * /home/thenoviceoof/.local/bin/.redshift-replace.sh
+EOF
+fi
+
 # Set up xterm
 if [ ! -e ~/.Xresources ]
 then
