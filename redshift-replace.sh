@@ -3,6 +3,7 @@
 
 # Stop the existing redshift.
 killall redshift-gtk
+killall redshift
 
 # Start again, but with manual settings.
 redshift-gtk -c /home/thenoviceoof/.config/redshift-night.conf
