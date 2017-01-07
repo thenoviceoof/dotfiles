@@ -33,6 +33,9 @@ sudo apt-get -y install xmonad gnome-session-flashback gnome-do \
 # Graphics
 sudo apt-get -y install blender inkscape mypaint gimp
 
+# Audio
+sudo apt-get -y install audacity
+
 # Dev tools
 sudo apt-get -y install python-pip python-virtualenv zfs nmap
 
