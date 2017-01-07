@@ -37,7 +37,7 @@ sudo apt-get -y install blender inkscape mypaint gimp
 sudo apt-get -y install audacity
 
 # Dev tools
-sudo apt-get -y install python-pip python-virtualenv zfs nmap bpython
+sudo apt-get -y install python-pip python-virtualenv zfs nmap bpython r-base
 
 # Writing tools
 sudo apt-get -y install markdown
