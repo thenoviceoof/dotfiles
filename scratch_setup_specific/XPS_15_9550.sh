@@ -25,7 +25,7 @@ then
     EXISTING_CONFIG=`grep "# Custom option" /etc/X11/xorg.conf.d/50-custom-synaptics.conf`
     if [ -z "$EXISTING_CONFIG" ]
     then
-        sudo bash -c 'cat <<EOF >>/etc/X11/xorg.conf.d/50-synaptics.conf
+        sudo bash -c 'cat <<EOF >>/etc/X11/xorg.conf.d/50-custom-synaptics.conf
 
 # Custom option
 # Turn on palm rejection
