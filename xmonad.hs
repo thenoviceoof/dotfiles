@@ -65,6 +65,9 @@ myKeys = [ -- M-m shows the next empty workspace
            -- Work around for mute working, but unmute leaving subcomponents muted.
            -- https://bugs.launchpad.net/ubuntu/+source/alsa-utils/+bug/1313813
          , ((noModMask, xF86XK_AudioMute), spawn "amixer -D pulse set Master toggle")
+           -- Define brightness change keys
+         , ((noModMask, xF86XK_MonBrightnessUp), spawn "sudo ~/.local/bin/.screen-brightness-change +10")
+         , ((noModMask, xF86XK_MonBrightnessDown), spawn "sudo ~/.local/bin/.screen-brightness-change -10")
            -- Get a sane browser tab-switching keybinding (mostly for bujano).
          , ((modkey .|. altMask, xK_Right), sendKey controlMask xK_Page_Down)
          , ((modkey .|. altMask, xK_Left), sendKey controlMask xK_Page_Up)

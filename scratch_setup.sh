@@ -157,6 +157,21 @@ EOF
     xrdb -merge ~/.Xresources
 fi
 
+# Set up backlight permissions/script.
+if [ ! -e /etc/sudoers.d/backlight ]
+then
+    sudo bash -c "cat <<EOF >/etc/sudoers.d/backlight
+# Change screen brightness.
+thenoviceoof ALL=(ALL) NOPASSWD: /home/thenoviceoof/.local/bin/.screen-brightness-change
+EOF"
+fi
+if [ ! -e ~/.local/bin/.screen-brightness-change ]
+then
+    cp screen-brightness-change.sh ~/.local/bin/.screen-brightness-change
+    # Make sure permissions are locked down.
+    chmod u+x,go-x,-w ~/.local/bin/.screen-brightness-change
+fi
+
 # DEPRECATED
 
 # gnome-terminal: default to more rows
