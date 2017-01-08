@@ -20,14 +20,12 @@ then
 fi
 if [ ! -e /etc/X11/xorg.conf.d/50-custom-synaptics.conf ]
 then
-    sudo cp /usr/share/X11/xorg.conf.d/50-synaptics.conf \
-         /etc/X11/xorg.conf.d/50-custom-synaptics.conf
-    EXISTING_CONFIG=`grep "# Custom option" /etc/X11/xorg.conf.d/50-custom-synaptics.conf`
+    EXISTING_CONFIG=`grep "# Custom options" /etc/X11/xorg.conf.d/50-custom-synaptics.conf`
     if [ -z "$EXISTING_CONFIG" ]
     then
         sudo bash -c 'cat <<EOF >>/etc/X11/xorg.conf.d/50-custom-synaptics.conf
 
-# Custom option
+# Custom options
 # Turn on palm rejection
 Section "InputClass"
     Identifier "Palm Rejection"
