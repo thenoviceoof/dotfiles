@@ -162,15 +162,26 @@ then
     chmod u+x,go-x,-w ~/.local/bin/.screen-brightness-change
 fi
 
-# DEPRECATED
+########################################
+# PARTIALLY DEPRECATED (gnome-terminal)
+
+TERM_PROFILE=`gsettings get org.gnome.Terminal.ProfilesList default | cut -d "'" -f 2`
 
 # gnome-terminal: default to more rows
-TERM_PROFILE=`gsettings get org.gnome.Terminal.ProfilesList default | cut -d "'" -f 2`
 dconf write /org/gnome/terminal/legacy/profiles:/:$TERM_PROFILE/default-size-rows 40
 
 # gnome-terminal: Set Inconsolata as default
 dconf write /org/gnome/terminal/legacy/profiles:/:$TERM_PROFILE/use-system-font false
 dconf write /org/gnome/terminal/legacy/profiles:/:$TERM_PROFILE/font "'Inconsolata Medium 12'"
+
+# gnome-terminal: Set colors
+dconf write /org/gnome/terminal/legacy/profiles:/:$TERM_PROFILE/use-theme-colors false
+dconf write /org/gnome/terminal/legacy/profiles:/:$TERM_PROFILE/use-theme-transparency false
+dconf write /org/gnome/terminal/legacy/profiles:/:$TERM_PROFILE/foreground-color "'rgb(255,255,255)'"
+dconf write /org/gnome/terminal/legacy/profiles:/:$TERM_PROFILE/background-color "'rgb(20,22,25)'"
+
+########################################
+# DEPRECATED
 
 # gnome-do: change invoke keys
 gconftool-2 -s /apps/gnome-do/preferences/Do/Platform/Common/AbstractKeyBindingService/Summon_Do "<Control>Tab" --type=string
