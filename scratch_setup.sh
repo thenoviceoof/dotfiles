@@ -179,6 +179,8 @@ dconf write /org/gnome/terminal/legacy/profiles:/:$TERM_PROFILE/use-theme-colors
 dconf write /org/gnome/terminal/legacy/profiles:/:$TERM_PROFILE/use-theme-transparency false
 dconf write /org/gnome/terminal/legacy/profiles:/:$TERM_PROFILE/foreground-color "'rgb(255,255,255)'"
 dconf write /org/gnome/terminal/legacy/profiles:/:$TERM_PROFILE/background-color "'rgb(20,22,25)'"
+# Fully defining the color scheme is a giant pain in the ass, so I'm
+# not going to do it now.
 
 ########################################
 # DEPRECATED
