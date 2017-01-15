@@ -22,6 +22,11 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
 
+ ; The default blue color is a bit too dark. Use a tweaked Tango color
+ '(font-lock-function-name-face ((((class color)) (:foreground "#2455F4"))))
+ '(org-level-1-face ((((class color)) (:foreground "#2455F4"))))
+ '(org-agenda-structure ((((class color)) (:foreground "#2455F4"))))
+
  ; Flymake faces
  '(flymake-errline ((((class color)) (:background "red"))))
  '(flymake-warnline ((((class color)) (:background "yellow"))))
