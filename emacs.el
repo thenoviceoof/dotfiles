@@ -64,6 +64,9 @@
 (setq backup-directory-alist `(("." . "~/.emacsbackups")))
 (setq backup-by-copying t)
 
+; TODO: figure out how to make the colors with dark/black not suck so bad.
+;; (setq frame-background-mode 'black)
+
 ;;######################################################################
 ;; more fancy language-agnostic things
 
@@ -103,6 +106,18 @@
  ; prevent mumamo from annoying me too much
  '(warning-minimum-level :error))
 
+; Turn on git-commit support
+(global-git-commit-mode)
+
+; Hack the diff mode colors to match a dark background.
+(eval-after-load 'diff-mode
+  '(progn
+     (set-face-foreground 'diff-added "green")
+     (set-face-background 'diff-added nil)
+     (set-face-foreground 'diff-removed "red")
+     (set-face-background 'diff-removed nil)
+     (set-face-background 'diff-file-header nil)
+     (set-face-background 'diff-header nil)))
 
 ;;######################################################################
 ;; language specific extensions

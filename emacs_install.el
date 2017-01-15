@@ -35,3 +35,5 @@
 (package-install 'dart-mode)
 
 (package-install 'yaml-mode)
+
+(package-install 'git-commit)
