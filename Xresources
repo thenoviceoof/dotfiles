@@ -1,0 +1,29 @@
+! WARNING: Currently in a half working state.
+!  Scrollbar is butt ugly
+!  alt does not get passed/processed like usual
+
+! Font
+XTerm*faceName: Inconsolata
+XTerm*faceSize: 12
+
+! Colors
+XTerm*color4: rgb:70/50/ff
+!   color12 also defaults to blue (light blue): tweak if needed
+XTerm*background: rgb:10/12/15
+
+! Scrollback
+XTerm*savelines: 16384
+XTerm*rightScrollBar: true
+XTerm*ScrollBar: true
+! TODO: make the scrollbar thinner/not so ugly.
+
+! Bypass the weird copy-paste behavior
+XTerm*selectToClipboard: true
+!   also use shift-insert to paste
+XTerm*VT100.Translations: #override \
+    Shift Ctrl<Key>V: insert-selection(CLIPBOARD)
+
+! Readable menu colors
+XTerm*mainMenu*foreground: grey
+XTerm*vtMenu*foreground: grey
+XTerm*fontMenu*foreground: grey

@@ -147,16 +147,6 @@ then
 EOF
 fi
 
-# Set up xterm
-if [ ! -e ~/.Xresources ]
-then
-    cat <<EOF >~/.Xresources
-XTerm*faceName: Inconsolata
-XTerm*faceSize: 10
-EOF
-    xrdb -merge ~/.Xresources
-fi
-
 # Set up backlight permissions/script.
 if [ ! -e /etc/sudoers.d/backlight ]
 then

@@ -7,6 +7,18 @@ fi
 cp emacs.el ~/.emacs
 
 ################################################################################
+# xterm
+
+if [ -e ~/.Xresources ]
+then
+    mv ~/.Xresources ~/.Xresources_bak
+fi
+cp Xresources ~/.Xresources
+
+# Update X.
+xrdb -merge ~/.Xresources
+
+################################################################################
 # zsh
 
 # This assumes that oh-my-zsh has been installed
