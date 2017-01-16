@@ -80,6 +80,3 @@ fi
 # Get the (current) newest driver for the right card support.
 # TODO: get bumblebee working without a ton of hacks
 sudo apt-get -y install nvidia-367 nvidia-prime
-
-# For testing with glxgears
-sudo apt-get -y install mesa-utils

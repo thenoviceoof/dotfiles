@@ -32,6 +32,8 @@ sudo apt-get -y install xmonad gnome-session-flashback gnome-do \
 
 # Graphics
 sudo apt-get -y install blender inkscape mypaint gimp
+# For testing with glxgears
+sudo apt-get -y install mesa-utils
 
 # Audio
 sudo apt-get -y install audacity
