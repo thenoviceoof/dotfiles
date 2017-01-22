@@ -3,6 +3,9 @@
 # NOTES:
 # - Used to provision borune with Ubuntu 2016.04
 
+# Die on errors
+set -e
+
 echo "thenoviceoof's SUPER-DUPER SWEET AS HELL SETUP AND PROVISIONING SCRIPT"
 echo "============================================================"
 echo "WARNING: This script is only MOSTLY idempotent"
