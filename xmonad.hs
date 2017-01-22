@@ -58,7 +58,7 @@ myKeys = [ -- M-m shows the next empty workspace
             spawn "gnome-screensaver-command --lock")
            -- Override the default XMonad restart command
          , ((modkey, xK_q),
-            spawn "killall xautolock nm-applet volti ibus-daemon trayer redshift redshift-gtk; xmonad --recompile && xmonad --restart")
+            spawn "killall xautolock nm-applet volti ibus-daemon trayer; xmonad --recompile && xmonad --restart")
            -- Define volume keys.
          , ((noModMask, xF86XK_AudioLowerVolume), spawn "amixer set Master 5-")
          , ((noModMask, xF86XK_AudioRaiseVolume), spawn "amixer set Master 5+")
@@ -92,7 +92,7 @@ myStartupHook = do
   -- Start up the trayer
   spawn "trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 15 --transparent true --alpha 0 --tint 0x000000 --height 20"
   -- Start up redshift-gtk
-  spawn "redshift-gtk"
+  spawn ".redshift-replace.sh"
 
 main = do
   xmproc <- spawnPipe "xmobar"

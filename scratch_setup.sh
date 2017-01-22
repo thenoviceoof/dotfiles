@@ -144,8 +144,9 @@ EXISTING_REDSHIFT_CRON=`crontab -l | grep "REDSHIFTCRON"`
 if [ -z "$EXISTING_REDSHIFT_CRON" ]
 then
     crontab -l 2>/dev/null | cat - <<EOF | crontab -
-# REDSHIFTCRON Turn on redshift near bedtime.
-0 23 * * * /home/thenoviceoof/.local/bin/.redshift-replace.sh
+# REDSHIFTCRON Turn on redshift near bedtime/wake time.
+1 23 * * * /home/thenoviceoof/.local/bin/.redshift-replace.sh
+1 6 * * * /home/thenoviceoof/.local/bin/.redshift-replace.sh
 EOF
 fi
 
