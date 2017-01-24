@@ -8,7 +8,7 @@ CURRENT_NIGHT=`pgrep -f redshift-night >/dev/null; echo $?`
 
 # Which state should we be in?
 HOUR=`date "+%H"`
-SHOULD_NIGHT=`test $HOUR -gt 14 -o $HOUR -lt 6; echo $?`
+SHOULD_NIGHT=`test $HOUR -gt 23 -o $HOUR -lt 6; echo $?`
 
 # Stop the existing redshift.
 if [ $SHOULD_NIGHT -ne $CURRENT_NIGHT ] && [ $CURRENT_REDSHIFT -eq 0 ]
