@@ -9,6 +9,7 @@ for file in $(ls | grep -v html | grep -v \.sh); do
     echo ""
 
     tmpfile=$(mktemp)
+    tmphtmlfile=$(mktemp)
     cat $file | perl -0777 -pe 's/\n\n\n.*//igs' >$tmpfile
 
     # Run proselint.
@@ -56,8 +57,37 @@ for file in $(ls | grep -v html | grep -v \.sh); do
     ############################################################
     # Generate markdown.
     echo "---------- Generating markdown..."
-    mdfile="$file.html"
-    cat <<EOF >$mdfile
+    markdown $tmpfile >$tmphtmlfile
+
+    ############################################################
+    # Massage output
+
+    # Make sure HTML tags don't end a line: copy pasting to Google
+    # Docs when a display/markdown line break coincide with an HTML
+    # tag ends the markdown line elides the whitespace between the
+    # HTML tag and the content on the next markdown line. For example:
+    #
+    #     <style>p { width: 1em; }</style>
+    #
+    #     Test *no*
+    #     whitespace.
+    #
+    # will be rendered as *no*whitespace after paste. This hacks
+    # around the issue by reformatting HTML lines that end in an HTML
+    # tag. The problem still exists for display breaks with tags on
+    # both sides of the break.
+    workingfile=$(mktemp)
+    cat $tmphtmlfile | \
+        perl -0777pe 's/(<\/.+>)\n(.)/$1 $2/g' | \
+        perl -0777pe 's/(.)\n(<.+>)/$1 $2/g' >$workingfile
+    mv $workingfile $tmphtmlfile
+
+    ############################################################
+    # Write the output file
+    echo "---------- Writing output file..."
+
+    htmlfile="$file.html"
+    cat <<EOF >$htmlfile
 <!DOCTYPE html>
 <html>
 <head>
@@ -66,13 +96,14 @@ for file in $(ls | grep -v html | grep -v \.sh); do
 
 <body>
 EOF
-    cat $tmpfile | markdown >>$mdfile
-    cat <<EOF >>$mdfile
+    cat $tmphtmlfile >>$htmlfile
+    cat <<EOF >>$htmlfile
 </body>
 </html>
 EOF
     echo ""
 
     # Clean up.
+    rm $tmphtmlfile
     rm $tmpfile
 done
