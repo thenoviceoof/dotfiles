@@ -37,8 +37,8 @@ for file in $(ls | grep -v html | grep -v \.sh); do
 
     # Passive voice detection is too noisy.
 
-    # Lexical illusions are covered by proselint, but in a silly that
-    # doesn't actually extend across lines.
+    # Lexical illusions are covered by proselint, but in a silly way
+    # that doesn't actually extend across lines.
 
     # Do lexical illusion detection myself
     echo "---------- Lexical illusions (repeated)"
