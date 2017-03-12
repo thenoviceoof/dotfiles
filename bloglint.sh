@@ -19,7 +19,7 @@ for file in $(ls | grep -v html | grep -v \.sh); do
 
     # Find unescaped markdown link paretheses.
     echo "---------- Markdown parentheses"
-    grep '](http.*(.*[^\]).*)' $tmpfile
+    grep '](http[^()]*([^()\]*)[^()]*)' $tmpfile
     echo ""
 
     ############################################################
