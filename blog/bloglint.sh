@@ -53,6 +53,11 @@ for file in $(ls | grep -v html | grep -v \.sh); do
     ############################################################
     # Massage input
 
+    # Handle footnotes.
+    workingfile=$(mktemp)
+    blog-footnote.py $tmpfile $workingfile
+    mv $workingfile $tmpfile
+
     # Replace ... with a proper ellipsis
     workingfile=$(mktemp)
     cat $tmpfile | sed 's/\.\.\./…/' >$workingfile
