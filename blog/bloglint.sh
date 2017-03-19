@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# Make sure errors kill the process.
+# TODO: get proselint failures to stop killing the process.
+# set -e
+
 # Clean up old html files.
 rm -f *.html
 
