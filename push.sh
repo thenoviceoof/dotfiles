@@ -57,7 +57,7 @@ then
     ln -s ~/.local/bin/genpass.py ~/.local/bin/genpass
 fi
 
-cp bloglint.sh ~/.local/bin/
+cp blog/bloglint.sh ~/.local/bin/
 if [ ! -e ~/.local/bin/bloglint ]
 then
     ln -s ~/.local/bin/bloglint.sh ~/.local/bin/bloglint
