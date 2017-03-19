@@ -92,13 +92,18 @@ if __name__ == '__main__':
                     footnote_obj['footnote_end'] = j
                     footnotes_info.append(footnote_obj)
                     footnote_obj = {}
+                footnote_paragraph_index = paragraph.find(footnote_starts[j])
                 footnote_obj = {
                     'footnote_start': j,
-                    'footnote_index': paragraph.find(footnote_starts[j]),
+                    'footnote_index': footnote_paragraph_index,
                 }
+                # Sanity check that footnotes exist in the text.
+                if footnote_paragraph_index == -1:
+                    logging.warning('Paragraph %d, footnote %s does not exist.',
+                                    i, footnote_starts[j])
                 # Sanity check for duplicated footnotes.
                 if paragraph.find(footnote_starts[j],
-                                  footnote_obj['footnote_index'] + 1) != -1:
+                                  footnote_paragraph_index + 1) != -1:
                     logging.warning('Paragraph %d, footnote %s is duplicated.',
                                     i, footnote_starts[j])
         # Clean up the last footnote.
