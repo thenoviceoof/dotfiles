@@ -63,6 +63,8 @@ then
     ln -s ~/.local/bin/bloglint.sh ~/.local/bin/bloglint
 fi
 
+cp blog/blog-footnote.py ~/.local/bin/
+
 ################################################################################
 # System-invoked binaries
 
