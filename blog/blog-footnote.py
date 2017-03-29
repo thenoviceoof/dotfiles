@@ -134,7 +134,7 @@ if __name__ == '__main__':
             link_to_footnote = '<a href="#{0}" id="{1}">{2}</a>'.format(
                 footnote_id, return_id, global_footnote_count)
             modified_paragraph = modified_paragraph.replace(
-                footnote_marker, '<sup>{}</sup>'.format(link_to_footnote))
+                footnote_marker, '[{}]'.format(link_to_footnote))
 
             # Munge the footnote.
             modified_footnote_marker = '[{}]'.format(global_footnote_count)
