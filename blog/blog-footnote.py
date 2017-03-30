@@ -54,7 +54,7 @@ if __name__ == '__main__':
 
     file_hash = hashlib.sha256()
     file_hash.update(os.path.basename(args.input_path))
-    global_file_id = base64.b64encode(file_hash.digest())[:8]
+    global_file_id = base64.urlsafe_b64encode(file_hash.digest())[:8]
     logging.info('Using file ID of %s' % global_file_id)
     global_footnote_count = 1  # Global footnote counter.
     for i,paragraph in enumerate(paragraphs):
