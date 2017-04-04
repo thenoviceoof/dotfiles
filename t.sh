@@ -14,7 +14,7 @@ if [ -f "$BACKUPPATH" ]
 then
     echo "Backup already exists"
 else
-    REMOTEPATH="pi@raspberrypi.local:/data/backup/todo/$BACKUPNAME"
+    REMOTEPATH="pi@192.168.1.20:/data/backup/todo/$BACKUPNAME"
     cp "$TODOPATH" "$BACKUPPATH"
     scp "$TODOPATH" "$REMOTEPATH"
 fi
