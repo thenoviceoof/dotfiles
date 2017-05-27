@@ -42,6 +42,8 @@ PATH=$PATH:$HOME/.cljr/bin
 # assumes .local/bin/e.sh -> e is there
 export EDITOR="e"
 
+alias prsync="rsync -ah --progress"
+
 # customize git prompt
 
 zsh_theme_git_prompt_diff () {
