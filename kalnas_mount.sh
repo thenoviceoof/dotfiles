@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 SSHCMD="autossh -M 0 -o 'ServerAliveInterval 5' -o 'ServerAliveCountMax 3'"
 
 # Port for nfsd.
