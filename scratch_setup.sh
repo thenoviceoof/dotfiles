@@ -115,7 +115,7 @@ sudo mv /tmp/keyboard_configuration /etc/default/keyboard
 
 # profile: replace caps lock with ctrl on login, turn on X server kill keys
 KEYMAP_OPTIONS="ctrl:nocaps,terminate:ctrl_alt_bksp"
-EXISTING_CTRL_KEYMAP=`grep "setxkbmap -option \"$KEYMAP_OPTIONS\"" ~/.profile`
+EXISTING_CTRL_KEYMAP=`grep "setxkbmap -option \"$KEYMAP_OPTIONS\"" ~/.profile || true`
 if [ -z "$EXISTING_CTRL_KEYMAP" ]
 then
     printf "\nsetxkbmap -option \"$KEYMAP_OPTIONS\"\n" >>~/.profile
@@ -143,7 +143,7 @@ dconf write /desktop/ibus/general/preload-engines \
 dconf write /desktop/ibus/general/hotkey/triggers "['<Control><Alt>space']"
 
 # Set up redshift cron hack.
-EXISTING_REDSHIFT_CRON=`crontab -l | grep "REDSHIFTCRON"`
+EXISTING_REDSHIFT_CRON=`crontab -l | grep "REDSHIFTCRON" || true`
 if [ -z "$EXISTING_REDSHIFT_CRON" ]
 then
     crontab -l 2>/dev/null | cat - <<EOF | crontab -
