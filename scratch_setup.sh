@@ -174,7 +174,7 @@ if [ ! -e /etc/sudoers.d/kalnas ]
 then
     sudo bash -c "cat <<EOF >/etc/sudoers.d/kalnas
 # Allow the normal user to mount the NAS.
-thenoviceoof ALL=(ALL) NOPASSWD: /home/thenoviceoof/.local/bin/kalnas_mount
+thenoviceoof ALL=(ALL) NOPASSWD: /home/thenoviceoof/.local/bin/.kalnas_mount_command.sh
 EOF"
 fi
 # If the NAS box doesn't have the host entry yet, add it.
@@ -186,11 +186,15 @@ then
 192.168.1.21    kalnas
 EOF"
 fi
-# Add the script, lock down permissions.
+# Add the scripts, lock down permissions.
 if [ ! -e ~/.local/bin/kalnas_mount ]
 then
     cp kalnas_mount.sh ~/.local/bin/kalnas_mount
-    chmod u+x,go-x,-w ~/.local/bin/kalnas_mount
+fi
+if [ ! -e ~/.local/bin/.kalnas_mount_command.sh ]
+then
+    cp kalnas_mount_command.sh ~/.local/bin/.kalnas_mount_command.sh
+    chmod u+x,go-x,-w ~/.local/bin/.kalnas_mount_command.sh
 fi
 
 ########################################

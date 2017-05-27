@@ -11,4 +11,5 @@ if [ -z "$NFSD_TUNNEL" ]; then
     ssh kalnas -L 3049:localhost:32222 -f -N
 fi
 # Use the ssh tunnels to access the NFS share.
-sudo mount -t nfs -o port=3048,mountport=3049,tcp localhost:/mnt/Data/DataShare ~/d
+# Put the mount command in it's own file, so we can run it with sudo.
+sudo ~/.local/bin/.kalnas_mount_command.sh
