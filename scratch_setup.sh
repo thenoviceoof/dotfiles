@@ -26,7 +26,7 @@ echo "Installing from apt-get"
 
 # General tools
 sudo apt-get -y install emacs vim git-core keepass2 chromium-browser \
-     zsh aptitude vlc redshift-gtk avahi-dnsconfd autossh
+     zsh aptitude vlc redshift-gtk avahi-dnsconfd autossh sshfs
 
 # Glue tools
 # DEPRECATED: gnome-session/gnome-do
@@ -169,14 +169,6 @@ then
 fi
 
 # Set up the NAS mount script.
-# Allow the script to execute as root.
-if [ ! -e /etc/sudoers.d/kalnas ]
-then
-    sudo bash -c "cat <<EOF >/etc/sudoers.d/kalnas
-# Allow the normal user to mount the NAS.
-thenoviceoof ALL=(ALL) NOPASSWD: /home/thenoviceoof/.local/bin/.kalnas_mount_command.sh
-EOF"
-fi
 # If the NAS box doesn't have the host entry yet, add it.
 KALNAS_HOST=`cat /etc/hosts | grep "192.168.1.21 kalnas" || true`
 if [ -z "$KALNAS_HOST" ]
@@ -186,15 +178,10 @@ then
 192.168.1.21    kalnas
 EOF"
 fi
-# Add the scripts, lock down permissions.
+# Add the wrapper script.
 if [ ! -e ~/.local/bin/kalnas_mount ]
 then
     cp kalnas_mount.sh ~/.local/bin/kalnas_mount
-fi
-if [ ! -e ~/.local/bin/.kalnas_mount_command.sh ]
-then
-    cp kalnas_mount_command.sh ~/.local/bin/.kalnas_mount_command.sh
-    chmod u+x,go-x,-w ~/.local/bin/.kalnas_mount_command.sh
 fi
 
 ########################################
